@@ -1,4 +1,4 @@
-package com.eucolus.poll;
+package com.eucolus.poll.Controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
