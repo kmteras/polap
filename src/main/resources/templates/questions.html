@@ -3,15 +3,18 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Add Question</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
 </head>
 <body>
     <h1>Questions</h1>
     <ul>
         <li th:each="item : ${questionsList}" th:text="${item.text}"/>
     </ul>
-    <form method="post" action="/questions/api/add" modelAttribute="question" th:object="${question}">
+    <form id="addQuestion" method="post" action="/questions/api/add" modelAttribute="question" th:object="${question}">
         <input type="text" th:field="*{text}" />
         <input type="submit" value="Add Question" />
     </form>
 </body>
+<script type="text/javascript" src="/questions.js"></script>
 </html>
