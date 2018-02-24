@@ -9,6 +9,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface QuestionRepository extends CrudRepository<QuestionEntity, Long> {
-    @Query(value = "SELECT text from question_entity", nativeQuery = true)
+    @Query(value = "SELECT id, text from question_entity", nativeQuery = true)
     List<QuestionSummary> findAllQuestions();
 }
