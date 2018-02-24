@@ -7,7 +7,7 @@ $("#addQuestion").submit(function(event) {
         data: $('#addQuestion').serialize(),
         contentType: "application/x-www-form-urlencoded",
         success: function(responseData, textStatus, jqXHR) {
-            window.location.reload(false);
+            window.location.reload(true);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(errorThrown);
