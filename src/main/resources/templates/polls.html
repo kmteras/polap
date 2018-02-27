@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Add Question</title>
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="/css/materialize.min.css"/>
     <link rel="stylesheet" type="text/css" href="/css/app.css"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Add Question</title>
+
     <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="/js/materialize.min.js"></script>
     <script type="text/javascript" src="/js/polls.js"></script>
 </head>
 <body>
 <div class="container">
-    <h1>Polls</h1>
-    <h1>Add Poll</h1>
-    <div class="row">
-        <div class="col s1 blue">1</div>
-        <div class="col s1 red">2</div>
+    <div class="collection with-header">
+        <li class="collection-header"><h4>Polls</h4></li>
+        <a href="#!" class="collection-item">Alvin</a>
+        <a href="#!" class="collection-item active">Alvin</a>
+        <a href="#!" class="collection-item">Alvin</a>
+        <a href="#!" class="collection-item">Alvin</a>
     </div>
+    <h2>Add Poll</h2>
     <div class="row">
         <div class="input-field col s6">
             <input id="poll_title" type="text" class="validate"/>
@@ -25,31 +29,32 @@
         </div>
     </div>
     <h3>Questions</h3>
-    <div class="row">
+    <div class="row" id="question">
         <div class="input-field col s4">
             <input id="question_text" type="text" class="validate"/>
             <label for="question_text">Question</label>
         </div>
-        <div class="input-field col s2">
-            <input type="checkbox" class="filled-in" id="multible_choice"/>
-            <label for="multible_choice">Multible Choice</label>
+        <!--<div class="input-field col s2">-->
+            <!--<input type="checkbox" class="filled-in multible_choice" id="multiple_choice"/>-->
+            <!--<label for="multiple_choice">Multiple Choice</label>-->
+        <!--</div>-->
+    </div>
+    <div class="row" id="answers0">
+        <div class="input-field col 2">
+            <input type="checkbox" class="filled-in multiple_choice" id="right_answer0"/>
+            <label for="right_answer0">Right Answer</label>
+        </div>
+        <div class="input-field col 3">
+            <input id="answer_text0" type="text" class="validate"/>
+            <label for="answer_text0">Answer</label>
         </div>
     </div>
-    <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+    <!--<a class="btn-floating btn-large waves-effect waves-light red" id="add_question"><i-->
+            <!--class="material-icons">add</i></a>-->
+    <br/>
     <button class="btn waves-effect waves-light" type="submit" name="action">Add Poll
         <i class="material-icons right">send</i>
     </button>
-    <ul>
-        <!--<li th:each="poll : ${polls}" th:text="${poll.title}"/>-->
-        <!--<ul>-->
-        <!--<li th:each="question : ${questions}" th:text="${question.text}"/>-->
-        <!--</ul>-->
-    </ul>
-    <!--<form id="questionsForm" method="post" action="/questions/form" modelAttribute="question">-->
-    <!--<input type="text" th:field="${question.text}"/>-->
-    <!--<input type="text" th:field="${answer.text}"/>-->
-    <!--<input type="submit" value="Add Question"/>-->
-    <!--</form>-->
 </div>
 </body>
 </html>
