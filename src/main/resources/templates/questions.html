@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Add Question</title>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
 
 </head>
 <body>
-    <h1>Questions</h1>
+<h1>Questions</h1>
+<ul>
+    <li th:each="item : ${questionsList}" th:text="${item.text}"/>
     <ul>
-        <li th:each="item : ${questionsList}" th:text="${item.text}"/>
+        <li th:each="answer : ${answersList}" th:text="${answer.text}"/>
     </ul>
-    <form id="addQuestion" method="post" action="/questions/api/add" modelAttribute="question" th:object="${question}">
-        <input type="text" th:field="*{text}" />
-        <input type="submit" value="Add Question" />
-    </form>
+</ul>
+<form id="questionsForm" method="post" action="/questions/form" modelAttribute="question">
+    <input type="text" th:field="${question.text}"/>
+    <input type="text" th:field="${answer.text}"/>
+    <input type="submit" value="Add Question"/>
+</form>
 </body>
-<script type="text/javascript" src="/questions.js"></script>
+<script type="text/javascript" src="/js/questions.js"></script>
 </html>

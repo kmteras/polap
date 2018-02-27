@@ -1,13 +1,15 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head> 
     <title>Getting Started: Serving Web Content</title> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript" src="/js/index.js"></script>
 </head>
 <body>
     <h1>Hello</h1>
-    <input type="text" id="greedName" name="greedName">
+    <input type="text" id="greedName" name="greedName" />
     <button type="button" onclick="greed()">Get greeting</button>
+    <br/>
+    <a href="/questions">To Questions</a>
 </body>
 </html>

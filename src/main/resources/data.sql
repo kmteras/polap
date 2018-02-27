@@ -1,2 +1,2 @@
-INSERT INTO question_entity (text) VALUES ('This is generated');
-INSERT INTO question_entity (text) VALUES ('This is another question');
+INSERT INTO questions (text) VALUES ('This is generated');
+INSERT INTO questions (text) VALUES ('This is another question');

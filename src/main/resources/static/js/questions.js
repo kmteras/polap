@@ -1,10 +1,10 @@
-$("#addQuestion").submit(function(event) {
+$("#questionsForm").submit(function(event) {
     event.preventDefault();
 
     $.ajax({
         type: "post",
         url: $(this).attr("action"),
-        data: $('#addQuestion').serialize(),
+        data: $('#questionsForm').serialize(),
         contentType: "application/x-www-form-urlencoded",
         success: function(responseData, textStatus, jqXHR) {
             window.location.reload(true);

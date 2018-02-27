@@ -1,8 +1,8 @@
 package com.eucolus.poll.Controllers;
 
-import com.eucolus.poll.Entities.QuestionEntity;
-import com.eucolus.poll.Entities.QuestionSummary;
-import com.eucolus.poll.QuestionRepository;
+import com.eucolus.poll.Entities.Question;
+import com.eucolus.poll.Entities.QuestionAnswer;
+import com.eucolus.poll.Repositories.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 @RequestMapping(path="/questions")
@@ -20,39 +19,28 @@ public class QuestionController {
     @Autowired
     private QuestionRepository questionRepository;
 
-    @GetMapping(value = "/")
+    @GetMapping(value = "")
     public String questionPage(Model model) {
         model.addAttribute("questionsList", questionRepository.findAllQuestions());
-        model.addAttribute("question", new QuestionEntity());
+        System.out.println(questionRepository.findAllQuestions());
+        model.addAttribute("question", new Question());
+        model.addAttribute("answer", new QuestionAnswer());
         return "questions";
     }
 
-    @PostMapping("/api")
-    public @ResponseBody String addQuestion(@RequestParam String text) {
-        QuestionEntity question = new QuestionEntity();
-        question.setText(text);
-        questionRepository.save(question);
-        return "Saved";
-    }
-
-    @PostMapping("/api/add")
-    public @ResponseBody String addQuestionForm(@Valid @ModelAttribute("question") QuestionEntity question,
-                                                BindingResult result, ModelMap model) {
+    @PostMapping("/form")
+    public @ResponseBody
+    String addQuestionForm(@Valid @ModelAttribute("question") Question question,
+                           @Valid @ModelAttribute("answer") QuestionAnswer answer,
+                           BindingResult result, ModelMap model) {
         if(result.hasErrors()) {
             return "Error";
         }
 
-        QuestionEntity questionEntity = new QuestionEntity();
-        questionEntity.setText(question.getText());
-        questionRepository.save(questionEntity);
+        System.out.println(answer);
+
+        questionRepository.addQuestion(question.getText());
 
         return "Success?";
-    }
-
-    @GetMapping("/api")
-    public @ResponseBody String welcome() {
-        List<QuestionSummary> qs = questionRepository.findAllQuestions();
-
-        return qs.toString();
     }
 }
