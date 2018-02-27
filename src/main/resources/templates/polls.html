@@ -16,10 +16,7 @@
 <div class="container">
     <div class="collection with-header">
         <li class="collection-header"><h4>Polls</h4></li>
-        <a href="#!" class="collection-item">Alvin</a>
-        <a href="#!" class="collection-item active">Alvin</a>
-        <a href="#!" class="collection-item">Alvin</a>
-        <a href="#!" class="collection-item">Alvin</a>
+        <a class="collection-item" th:each="poll : ${polls}" th:text="${poll.title}" th:href="${'/polls/' + poll.id}"></a>
     </div>
     <h2>Add Poll</h2>
     <div class="row">

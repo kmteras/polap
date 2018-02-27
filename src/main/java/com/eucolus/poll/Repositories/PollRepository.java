@@ -12,6 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface PollRepository extends CrudRepository<Poll, Long> {
-    @Query(value = "SELECT * text from polls", nativeQuery = true)
+    @Query(value = "SELECT * from polls", nativeQuery = true)
     List<Poll> findAllPolls();
+
+    @Query(value = "SELECT * from polls WHERE id = (:id)", nativeQuery = true)
+    Poll findPollWithId(@Param("id") Integer id);
 }
