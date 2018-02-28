@@ -11,11 +11,14 @@ public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private String ip;
-    private Integer osId;
+    @ManyToOne
+    private RequestLocation location;
+    @ManyToOne
+    private RequestOS os;
     private String requestType;
     private String requestUrl;
-    private String browser;
+    @ManyToOne
+    private RequestBrowser browser;
     private Timestamp dateTime;
 
     public Integer getId() {
@@ -26,20 +29,12 @@ public class Request {
         this.id = id;
     }
 
-    public String getIp() {
-        return ip;
+    public RequestOS getOs() {
+        return os;
     }
 
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-    public Integer getOsId() {
-        return osId;
-    }
-
-    public void setOsId(Integer os) {
-        this.osId = os;
+    public void setOs(RequestOS os) {
+        this.os = os;
     }
 
     public String getRequestType() {
@@ -58,19 +53,27 @@ public class Request {
         this.requestUrl = requestUrl;
     }
 
-    public String getBrowser() {
-        return browser;
-    }
-
-    public void setBrowser(String browser) {
-        this.browser = browser;
-    }
-
     public Timestamp getDateTime() {
         return dateTime;
     }
 
     public void setDateTime(Timestamp dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public RequestBrowser getBrowser() {
+        return browser;
+    }
+
+    public void setBrowser(RequestBrowser browser) {
+        this.browser = browser;
+    }
+
+    public RequestLocation getLocation() {
+        return location;
+    }
+
+    public void setLocation(RequestLocation location) {
+        this.location = location;
     }
 }

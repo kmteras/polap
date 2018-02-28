@@ -1,27 +1,23 @@
 package com.eucolus.poll.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
-
 import java.util.List;
 
 import static javax.persistence.CascadeType.ALL;
 
 @Entity
-@Table(name = "request_oss",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"os_name", "os_group"}))
-public class RequestOS {
+@Table(name = "request_browsers",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"name", "version"}))
+public class RequestBrowser {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @Column(name = "os_name")
     private String name;
-    @Column(name = "os_group")
-    private String group;
+    private String version;
     @JsonIgnore
-    @OneToMany(cascade = ALL, mappedBy = "os")
+    @OneToMany(cascade = ALL, mappedBy = "browser")
     private List<Request> requests;
 
     public Integer getId() {
@@ -40,12 +36,12 @@ public class RequestOS {
         this.name = name;
     }
 
-    public String getGroup() {
-        return group;
+    public String getVersion() {
+        return version;
     }
 
-    public void setGroup(String group) {
-        this.group = group;
+    public void setVersion(String version) {
+        this.version = version;
     }
 
     public List<Request> getRequests() {
