@@ -2,6 +2,7 @@ package com.eucolus.poll;
 
 import com.eucolus.poll.Entities.Request;
 import com.eucolus.poll.Entities.RequestOS;
+import com.eucolus.poll.Repositories.RequestOSRepository;
 import com.eucolus.poll.Repositories.RequestRepository;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.OperatingSystem;
@@ -22,6 +23,8 @@ public class RequestTrackFilter implements Filter {
 
     @Autowired
     RequestRepository requestRepository;
+    @Autowired
+    RequestOSRepository requestOSRepository;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -56,10 +59,20 @@ public class RequestTrackFilter implements Filter {
         trackRequest.setDateTime(new Timestamp(new Date().getTime()));
         trackRequest.setIp(request.getRemoteAddr());
 
-        RequestOS requestOS = new RequestOS();
-        requestOS.setOsGroup(os.getGroup().getName());
-        requestOS.setOsName(os.getName());
-        //trackRequest.setOs(requestOS);
+        //System.out.println(requestRepository.findAllRequests());
+
+        requestRepository.save(trackRequest);
+
+        RequestOS requestOS = requestOSRepository.find(os.getName(), os.getGroup().getName());
+
+        if(requestOS == null) {
+            requestOS = new RequestOS();
+            requestOS.setName(os.getName());
+            requestOS.setGroup(os.getGroup().getName());
+            requestOS = requestOSRepository.save(requestOS);
+        }
+
+        System.out.println(requestOS.getId());
 
         System.out.println(browserName + " " + browserVersion);
     }

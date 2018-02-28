@@ -1,6 +1,7 @@
 package com.eucolus.poll.Repositories;
 
 import com.eucolus.poll.Entities.Request;
+import com.eucolus.poll.Entities.RequestOS;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 

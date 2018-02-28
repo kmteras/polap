@@ -1,17 +1,18 @@
 package com.eucolus.poll.Entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "request_oss",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"os_name", "os_group"}))
 public class RequestOS {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private String osName;
-    private String osGroup;
+    @Column(name = "os_name")
+    private String name;
+    @Column(name = "os_group")
+    private String group;
 
     public Integer getId() {
         return id;
@@ -21,19 +22,19 @@ public class RequestOS {
         this.id = id;
     }
 
-    public String getOsName() {
-        return osName;
+    public String getName() {
+        return name;
     }
 
-    public void setOsName(String osName) {
-        this.osName = osName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getOsGroup() {
-        return osGroup;
+    public String getGroup() {
+        return group;
     }
 
-    public void setOsGroup(String osGroup) {
-        this.osGroup = osGroup;
+    public void setGroup(String group) {
+        this.group = group;
     }
 }
