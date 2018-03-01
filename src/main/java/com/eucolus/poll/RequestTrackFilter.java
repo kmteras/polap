@@ -81,7 +81,8 @@ public class RequestTrackFilter implements Filter {
             requestOS = new RequestOS();
             requestOS.setName(os.getName());
             requestOS.setGroup(os.getGroup().getName());
-            requestOS = requestOSRepository.save(requestOS);
+            int id = requestOSRepository.add(requestOS);
+            requestOS.setId(id);
         }
 
         RequestLocation requestLocation = requestLocationRepository.find(request.getRemoteAddr());

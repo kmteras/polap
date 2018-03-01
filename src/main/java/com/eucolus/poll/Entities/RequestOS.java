@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.util.List;
 
 import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.CascadeType.REFRESH;
 
 @Entity
 @Table(name = "request_oss",
@@ -21,7 +22,7 @@ public class RequestOS {
     @Column(name = "os_group")
     private String group;
     @JsonIgnore
-    @OneToMany(cascade = ALL, mappedBy = "os")
+    @OneToMany(mappedBy = "os")
     private List<Request> requests;
 
     public Integer getId() {

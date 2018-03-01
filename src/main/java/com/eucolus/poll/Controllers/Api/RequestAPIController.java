@@ -17,9 +17,7 @@ public class RequestAPIController {
     private RequestRepository requestRepository;
 
     @GetMapping("")
-
-    public @ResponseBody
-    List<Request> getAllRequests() {
+    public @ResponseBody List<Request> getAllRequests() {
         return requestRepository.findAllRequests();
     }
 }
