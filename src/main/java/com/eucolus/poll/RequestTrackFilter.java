@@ -16,6 +16,7 @@ import eu.bitwalker.useragentutils.Version;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -48,7 +49,7 @@ public class RequestTrackFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         chain.doFilter(request, response);
-        HttpServletRequest servletRequest = (HttpServletRequest)request;
+        HttpServletRequest servletRequest = (HttpServletRequest) request;
 
         String header = servletRequest.getHeader("User-Agent");
 
@@ -61,33 +62,44 @@ public class RequestTrackFilter implements Filter {
 
         Version version = userAgent.getBrowserVersion();
 
-        if(version != null) {
+        if (version != null) {
             browserVersion = version.getVersion();
         }
 
         RequestBrowser requestBrowser = requestBrowserRepository.find(browserName, browserVersion);
 
-        if(requestBrowser == null) {
+        if (requestBrowser == null) {
             requestBrowser = new RequestBrowser();
             requestBrowser.setName(browserName);
             requestBrowser.setVersion(browserVersion);
-            requestBrowser = requestBrowserRepository.save(requestBrowser);
+            try {
+                requestBrowser = requestBrowserRepository.save(requestBrowser);
+            } catch (DataIntegrityViolationException error) {
+                //Two requests were made too quickly at first and it tried to save a os twice
+                requestBrowser = requestBrowserRepository.find(browserName, browserVersion);
+            }
+
         }
 
         OperatingSystem os = userAgent.getOperatingSystem();
 
         RequestOS requestOS = requestOSRepository.find(os.getName(), os.getGroup().getName());
-        if(requestOS == null) {
+        if (requestOS == null) {
             requestOS = new RequestOS();
             requestOS.setName(os.getName());
             requestOS.setGroup(os.getGroup().getName());
-            int id = requestOSRepository.add(requestOS);
-            requestOS.setId(id);
+            try {
+                int id = requestOSRepository.add(requestOS);
+                requestOS.setId(id);
+            } catch (DataIntegrityViolationException error) {
+                //Two requests were made too quickly at first and it tried to save a os twice
+                requestOS = requestOSRepository.find(os.getName(), os.getGroup().getName());
+            }
         }
 
         RequestLocation requestLocation = requestLocationRepository.find(request.getRemoteAddr());
 
-        if(requestLocation == null) {
+        if (requestLocation == null) {
             URL url = new URL("http://freegeoip.net/json/" + request.getRemoteAddr());
             Scanner scanner = new Scanner(url.openStream());
 
@@ -98,7 +110,13 @@ public class RequestTrackFilter implements Filter {
             requestLocation.setCity(jsonObject.getString("city"));
             requestLocation.setLongitude(jsonObject.getDouble("longitude"));
             requestLocation.setLatitude(jsonObject.getDouble("latitude"));
-            requestLocation = requestLocationRepository.save(requestLocation);
+
+            try {
+                requestLocation = requestLocationRepository.save(requestLocation);
+            } catch (DataIntegrityViolationException error) {
+                //Two requests were made too quickly at first and it tried to save a os twice
+                requestLocation = requestLocationRepository.find(request.getRemoteAddr());
+            }
         }
 
         Request trackRequest = new Request();
