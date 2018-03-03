@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="pie.js"></script>
+    <script src="histogram.js"></script>
     <style>
         .legend {
             font-size: 12px;
@@ -30,7 +32,30 @@
 <body>
 <div id="chart"></div>
 </body>
-<!--<script src="time.js"></script>-->
-<script src="pie.js"></script>
-<script src="histogram.js"></script>
+<script>
+    var data1 = [{label: 'Firefox', count: 20},
+        {label: 'Chrome', count: 40},
+        {label: 'Internet Explorer', count: 3},
+        {label: 'Safari', count: 20}];
+
+    var data2 = [{label: 'Windows', count: 37},
+        {label: 'OS X', count: 18},
+        {label: 'Linux', count: 7},
+        {label: 'Android', count: 20},
+        {label: 'iOS', count: 23}];
+
+    var data3 = [
+        {day: new Date().toDateString(), count: 1},
+        {day: "2018-02-25", count: 2},
+        {day: "2018-02-26", count: 1},
+        {day: "2018-02-27", count: 3},
+        {day: "2018-02-28", count: 5},
+        {day: "2018-03-01", count: 6},
+        {day: "2018-03-02", count: 4},
+        {day: "2018-03-03", count: 5}];
+
+    makePie(data1);
+    makePie(data2);
+    makeHistogram(data3);
+</script>
 </html>
