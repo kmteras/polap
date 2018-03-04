@@ -14,6 +14,7 @@ public class StatisticsController {
     @RequestMapping("/statistics")
     public String statistics(Model model) {
         model.addAttribute("requests_count", requestRepository.findAllCount());
+        model.addAttribute("dateCount", requestRepository.getDateHist());
         return "statistics";
     }
 }

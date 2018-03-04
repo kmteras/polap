@@ -1,16 +1,27 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head> 
-    <title>Getting Started: Serving Web Content</title> 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="/js/pie.js" type="text/javascript"></script>
     <script src="/js/histogram.js" type="text/javascript"></script>
     <script src="/js/statistics.js" type="text/javascript"></script>
 </head>
 <body>
-    <h1 th:text="'Requests: ' + ${requests_count}"></h1>
-    <div id="chart0"></div>
-    <div id="chart1"></div>
+<h1 th:text="'Requests: ' + ${requests_count}"></h1>
+<div id="chart0"></div>
+<div id="chart1"></div>
+<table border="1">
+    <tr>
+        <td>Date</td>
+        <td>Request count</td>
+    </tr>
+    <tr th:each="date : ${dateCount}">
+        <td th:text="${date[0]}"></td>
+        <td th:text="${date[1]}"></td>
+    </tr>
+</table>
+
 </body>
 </html>
