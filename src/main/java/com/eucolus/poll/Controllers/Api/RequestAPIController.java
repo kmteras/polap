@@ -30,8 +30,9 @@ public class RequestAPIController {
         return requestRepository.getBrowserRequestsCount();
     }
 
-    @GetMapping("/oss") String getOSs() {
-        return "";
+    @GetMapping("/oss")
+    public @ResponseBody List<Object> getOSs() {
+        return requestRepository.getOSRequestsCount();
     }
 
 }
