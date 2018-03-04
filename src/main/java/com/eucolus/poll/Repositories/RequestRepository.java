@@ -16,9 +16,9 @@ public interface RequestRepository extends CrudRepository<Request, Long> {
     @Query(value = "SELECT COUNT(DISTINCT location_ip) FROM only_main_requests", nativeQuery = true)
     Integer findAllDistinctCount();
 
-    @Query(value = "SELECT FROM_UNIXTIME(ROUND(UNIX_TIMESTAMP(date_time)/(60*60))*(60*60)) AS datetime, " +
+    @Query(value = "SELECT FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(date_time)/(60*60))*(60*60)) AS datetime, " +
             "COUNT(id) AS count " +
-            "FROM only_main_requests GROUP BY FROM_UNIXTIME(ROUND(UNIX_TIMESTAMP(date_time)/(60*60))*(60*60))", nativeQuery = true)
+            "FROM only_main_requests GROUP BY FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(date_time)/(60*60))*(60*60))", nativeQuery = true)
     List<Object> getDateHist();
 
     @Query(value = "SELECT name, COUNT(name) FROM only_main_requests JOIN request_browsers " +
