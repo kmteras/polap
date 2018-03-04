@@ -26,8 +26,8 @@ public class RequestAPIController {
     }
 
     @GetMapping("/browsers")
-    public @ResponseBody String getBrowsers() {
-        return "";
+    public @ResponseBody List<Object> getBrowsers() {
+        return requestRepository.getBrowserRequestsCount();
     }
 
     @GetMapping("/oss") String getOSs() {

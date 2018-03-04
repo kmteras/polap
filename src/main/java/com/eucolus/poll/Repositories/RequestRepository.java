@@ -1,15 +1,9 @@
 package com.eucolus.poll.Repositories;
 
-import com.eucolus.poll.Entities.DateCountPrototype;
 import com.eucolus.poll.Entities.Request;
-import javafx.util.Pair;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-import javax.persistence.ColumnResult;
-import javax.persistence.ConstructorResult;
-import javax.persistence.SqlResultSetMapping;
-import java.sql.Timestamp;
 import java.util.List;
 
 public interface RequestRepository extends CrudRepository<Request, Long> {
@@ -26,4 +20,8 @@ public interface RequestRepository extends CrudRepository<Request, Long> {
             "COUNT(id) AS count " +
             "FROM requests GROUP BY FROM_UNIXTIME(ROUND(UNIX_TIMESTAMP(date_time)/(60*60))*(60*60))", nativeQuery = true)
     List<Object> getDateHist();
+
+    @Query(value = "SELECT name, COUNT(name) FROM requests JOIN request_browsers " +
+            "WHERE request_browsers.id = requests.browser_id GROUP BY name", nativeQuery = true)
+    List<Object> getBrowserRequestsCount();
 }
