@@ -23,7 +23,7 @@ var makeHistogram = function(newdata) {
         .attr('width', width)
         .attr('height', height);
     var margin = {top: 10, right: 30, bottom: 30, left: 30};
-    var width = +svg.attr("width") - margin.left - margin.right;
+    var width = +svg.attr("width");
     var height = +svg.attr("height") - margin.top - margin.bottom;
 //make g, child of svg and moved to margin
     var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -40,7 +40,7 @@ var makeHistogram = function(newdata) {
             console.log(d);
             return timeParser(d.day);
         })
-        .domain(x.domain())
+        // .domain(x.domain())
         .thresholds(x.ticks(bin_count));
 
 // var bins = d3.histogram()
@@ -78,7 +78,7 @@ var makeHistogram = function(newdata) {
 
     bar.append("rect")
         .attr("x", 1)
-        .attr("width", x(bins[0].x1) - x(bins[0].x0) - 1)
+        .attr("width", x(bins[0].x1) - x(bins[0].x0))
         .attr("height", function (d) {
             return height - y(getY(d));
         });
