@@ -1,18 +1,17 @@
 var makeHistogram = function(newdata) {
-    var bin_count = 9;
+    var bin_count = newdata.length;
     var width = 960;
     var height = 500;
 
-    var timeParser = d3.timeParse("%Y-%m-%d");
-
-    var data = [0.1, 0.2, 0.3, 0.3, 0.3, 0.4, 0.4, 0.4, 0.4,
-        0.5, 0.5, 0.5, 0.6, 0.6, 0.6, 0.7, 0.8];
+    var timeParser = d3.timeParse("%Q");
 
     var maxdate = d3.max(newdata, function (x) {
-        return timeParser(x.day)
+        console.log(x[0]);
+        console.log(timeParser(x[0]));
+        return timeParser(x[0])
     });
     var mindate = d3.min(newdata, function (x) {
-        return timeParser(x.day)
+        return timeParser(x[0])
     });
 
 //number formatting
@@ -23,7 +22,7 @@ var makeHistogram = function(newdata) {
         .attr('width', width)
         .attr('height', height);
     var margin = {top: 10, right: 30, bottom: 30, left: 30};
-    var width = +svg.attr("width");
+    var width = +svg.attr("width") - margin.left - margin.right;
     var height = +svg.attr("height") - margin.top - margin.bottom;
 //make g, child of svg and moved to margin
     var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -38,7 +37,7 @@ var makeHistogram = function(newdata) {
     var hist = d3.histogram()
         .value(function (d) {
             console.log(d);
-            return timeParser(d.day);
+            return timeParser(d[0]);
         })
         // .domain(x.domain())
         .thresholds(x.ticks(bin_count));
@@ -54,7 +53,7 @@ var makeHistogram = function(newdata) {
 
     function getY(b) {
         if (b.length > 0)
-            return b[0].count;
+            return b[0][1];
         else
             return 0;
     }

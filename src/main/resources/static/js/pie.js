@@ -1,4 +1,4 @@
-var makePie = function(data) {
+var makePie = function(data, div) {
     var width = 360;
     var height = 360;
     var radius = Math.min(width, height) / 2;
@@ -9,7 +9,7 @@ var makePie = function(data) {
 
     var color = d3.scaleOrdinal(d3.schemeCategory10);
 
-    var svg = d3.select('#chart')
+    var svg = d3.select('#' + div)
         .append('svg')
         .attr('width', width)
         .attr('height', height)
@@ -23,7 +23,7 @@ var makePie = function(data) {
 
     var pie = d3.pie()
         .value(function (d) {
-            return d.count;
+            return d[1];
         })
         .sort(null);
 
@@ -34,7 +34,7 @@ var makePie = function(data) {
         .attr('d', arc)
         .attr('fill',
             function (d, i) {
-                return color(d.data.label);
+                return color(d.data[0]);
             }
         );
 
