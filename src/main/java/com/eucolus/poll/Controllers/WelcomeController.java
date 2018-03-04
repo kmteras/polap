@@ -12,10 +12,4 @@ public class WelcomeController {
     public String index() {
         return "index";
     }
-
-    @RequestMapping("/welcome")
-    public String welcome(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model) {
-        model.addAttribute("name", name);
-        return "welcome";
-    }
 }
