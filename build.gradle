@@ -33,6 +33,10 @@ dependencies {
     compile('eu.bitwalker:UserAgentUtils:1.21')
     compile('org.json:json:20180130')
 
+	compile('org.webjars:jquery:3.3.1-1')
+    compile('org.webjars.bower:materialize:1.0.0-alpha.2')
+    compile('org.webjars.npm:d3:5.0.0-rc.3')
+
     compile('mysql:mysql-connector-java')
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
