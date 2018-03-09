@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       lang="en">
 <head>
-    <title>Statistika</title>
+    <title th:text="#{statistics_title}"></title>
 
     <th:block layout:include="fragments/head"/>
 
@@ -17,13 +17,13 @@
 <body>
 <th:block layout:replace="fragments/navigation"/>
 <div class="container">
-    <h1 th:text="'Päringuid: ' + ${requests_count}"></h1>
-    <h3>Päringuid tunnis</h3>
+    <h1 th:text="#{statistics_requests} + ': ' + ${requests_count}"></h1>
+    <h3 th:text="#{statistics_requestsph}">Päringuid tunnis</h3>
     <table class="striped">
         <thead>
         <tr>
-            <td>Aeg</td>
-            <td>Päringute hulk</td>
+            <td th:text="#{statistics_requestsph_time}"></td>
+            <td th:text="#{statistics_requestsph_amount}">Päringute hulk</td>
         </tr>
         </thead>
         <tbody>
@@ -39,7 +39,7 @@
         <div class="col s6 m6">
             <div class="card">
                 <div class="card-content">
-                    <span class="card-title">Külastajate browserid</span>
+                    <span class="card-title" th:text="#{statistics_visitor_browsers}"></span>
                     <div class="pi_chart" id="chart0"></div>
                 </div>
 
@@ -48,7 +48,7 @@
         <div class="col s6 m6">
             <div class="card">
                 <div class="card-content">
-                    <span class="card-title">Külastajate OS-id</span>
+                    <span class="card-title" th:text="#{statistics_visitor_oss}"></span>
                     <div class="pi_chart" id="chart1"></div>
                 </div>
             </div>
