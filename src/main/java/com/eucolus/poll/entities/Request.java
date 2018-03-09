@@ -1,6 +1,4 @@
-package com.eucolus.poll.Entities;
-
-import org.springframework.beans.factory.annotation.Autowired;
+package com.eucolus.poll.entities;
 
 import javax.persistence.*;
 import java.sql.Timestamp;

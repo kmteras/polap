@@ -1,4 +1,4 @@
-package com.eucolus.poll.Entities;
+package com.eucolus.poll.entities;
 
 import javax.persistence.*;
 

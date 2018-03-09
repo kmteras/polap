@@ -1,6 +1,6 @@
-package com.eucolus.poll.Controllers;
+package com.eucolus.poll.controllers;
 
-import com.eucolus.poll.Repositories.RequestRepository;
+import com.eucolus.poll.repositories.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

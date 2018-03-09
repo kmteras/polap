@@ -1,7 +1,7 @@
-package com.eucolus.poll.Controllers.Api;
+package com.eucolus.poll.controllers.api;
 
-import com.eucolus.poll.Entities.Request;
-import com.eucolus.poll.Repositories.RequestRepository;
+import com.eucolus.poll.entities.Request;
+import com.eucolus.poll.repositories.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

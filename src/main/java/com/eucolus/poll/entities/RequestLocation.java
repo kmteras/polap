@@ -1,4 +1,4 @@
-package com.eucolus.poll.Entities;
+package com.eucolus.poll.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
