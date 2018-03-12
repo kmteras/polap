@@ -7,3 +7,20 @@ body {
 main {
     flex: 1 0 auto;
 }
+
+#login-row {
+    margin-top: 40px;
+}
+
+#login-img {
+    width: 100%;
+}
+
+#login-col {
+    margin-top: 10px;
+}
+
+#login-btn {
+    margin-top: 20px;
+    margin-bottom: 50px
+}
