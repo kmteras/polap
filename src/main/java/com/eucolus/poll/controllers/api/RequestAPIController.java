@@ -15,11 +15,6 @@ public class RequestAPIController {
     @Autowired
     private RequestRepository requestRepository;
 
-    @GetMapping("")
-    public @ResponseBody List<Request> getAllRequests() {
-        return requestRepository.findAll();
-    }
-
     @GetMapping("/dates")
     public @ResponseBody List<Object> getDateHist() {
         return requestRepository.getDateHist();

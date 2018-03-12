@@ -73,4 +73,8 @@ public class RequestLocation {
     public void setRequests(List<Request> requests) {
         this.requests = requests;
     }
+
+    public boolean isSet() {
+        return !(city == null || country == null || latitude == null || longitude == null);
+    }
 }
