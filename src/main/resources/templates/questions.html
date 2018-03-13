@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      lang="en">
+<head>
+    <title>Questions</title>
+    <th:block layout:include="fragments/head"/>
+</head>
+<body>
+<th:block layout:replace="fragments/navigation"/>
+<main>
+    <div class="container">
+
+        <h3 class="center-align" th:text="#{manage_questions}"></h3>
+
+        <div class="row" id="questions-row">
+            <div class="col s12 m8 offset-m2">
+
+                <ul class="collection">
+                    <!--question fragments go here-->
+                    <th:block layout:replace="fragments/question"/>
+                    <th:block layout:replace="fragments/question"/>
+                </ul>
+
+                <p class="center-align">
+                    <a href="#!" class="center-align">
+                        <i class="material-icons green-text add-question-icon">add_circle</i>
+                    </a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</main>
+<th:block layout:replace="fragments/footer"/>
+</body>
+</html>

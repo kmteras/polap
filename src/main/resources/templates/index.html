@@ -4,31 +4,32 @@
       lang="en">
 <head>
     <title>Poll</title>
-
     <th:block layout:include="fragments/head"/>
-
-    <link rel="stylesheet" type="text/css" href="/css/app.css"/>
-
-    <script type="text/javascript" src="/js/app.js"></script>
 </head>
 <body>
 <th:block layout:replace="fragments/navigation"/>
 <main>
     <div class="container">
         <div class="row" id="login-row">
+
             <div class="col l8 m6 s12 valign-wrapper">
                 <img id="login-img" src="/img/education-image.jpg"/>
             </div>
+
             <div class="col l4 m6 s12" id="login-col">
+
                 <h5 th:text="#{teacher_dir}">Create polls for your students:</h5>
-                <a class="btn-large" id="login-btn" th:text="#{teacher_login}"></a>
+                <a class="btn-large" id="login-btn" th:text="#{teacher_login}" href="/questions"></a>
+
                 <h5 th:text="#{student_dir}">Or join a poll session:</h5>
                 <div class="input-field">
                     <input id="session_code" type="text"/>
                     <label for="session_code" th:text="#{session_id}"></label>
                 </div>
                 <a class="btn" th:text="#{join}"></a>
+
             </div>
+
         </div>
     </div>
 </main>
