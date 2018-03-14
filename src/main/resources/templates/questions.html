@@ -1,10 +1,12 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      lang="en">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <title>Questions</title>
+    <title th:text="#{questions}">Questions</title>
     <th:block layout:include="fragments/head"/>
+    <th:block layout:include="fragments/question_edit"/>
+    <link rel="stylesheet" type="text/css" href="/css/questions.css"/>
+    <script type="text/javascript" src="/js/questions.js"></script>
 </head>
 <body>
 <th:block layout:replace="fragments/navigation"/>
@@ -18,18 +20,19 @@
 
                 <ul class="collection">
                     <!--question fragments go here-->
-                    <th:block layout:replace="fragments/question"/>
-                    <th:block layout:replace="fragments/question"/>
+                    <th:block layout:replace="fragments/questions_question"/>
+                    <th:block layout:replace="fragments/questions_question"/>
                 </ul>
 
                 <p class="center-align">
-                    <a href="#!" class="center-align">
+                    <a href="#edit-modal" class="modal-trigger center-align" id="add-question-button">
                         <i class="material-icons green-text add-question-icon">add_circle</i>
                     </a>
                 </p>
 
             </div>
         </div>
+
     </div>
 </main>
 <th:block layout:replace="fragments/footer"/>

@@ -1,0 +1,58 @@
+/* question management page */
+
+#questions-row {
+    margin-top: 2.8em;
+}
+
+.question-text {
+    font-size: 22px;
+}
+
+.question-list-icon {
+    font-size: 2em;
+}
+
+.add-question-icon {
+    font-size: 5.6em;
+}
+
+/* question edit overlay */
+
+#question-edit-modal-content {
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+#edit-question-question {
+    margin-bottom: 0;
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+#edit-question-question textarea {
+    margin-bottom: 0;
+}
+
+#edit-question-hint {
+    margin-bottom: 0;
+}
+
+.edit-question-input-col {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.edit-question-list-icon {
+    font-size: 2em;
+    margin-top: 0.7em;
+}
+
+#add-answer-icon {
+    font-size: 3.2em;
+}
+
+#modal-close-button-wrap {
+    margin-top: 0;
+    margin-bottom: 0;
+}
