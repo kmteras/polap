@@ -17,7 +17,7 @@
         <div class="row" id="questions-row">
             <div class="col s12 m8 offset-m2">
 
-                <ul class="collection">
+                <ul class="collection" id="questions-wrapper">
                     <!--question fragments go here-->
                     <th:block layout:replace="fragments/questions_question"/>
                     <th:block layout:replace="fragments/questions_question"/>
@@ -34,6 +34,10 @@
 
     </div>
     <th:block layout:include="fragments/question_edit"/>
+    <div class="hide">
+        <th:block layout:replace="fragments/questions_question"/>
+        <th:block layout:replace="fragments/question_edit_answer"/>
+    </div>
 </main>
 <th:block layout:replace="fragments/footer"/>
 </body>

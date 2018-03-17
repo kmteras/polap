@@ -6,12 +6,9 @@ $(document).ready(function() {
         outDuration: 200, // Transition out duration
         startingTop: '4%', // Starting top style attribute
         endingTop: '10%', // Ending top style attribute
-        ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
-            //alert("Ready");
-            //console.log(modal, trigger);
-        },
+        ready: function(modal, trigger) {}, // Callback for Modal open. Modal and trigger parameters available.
         complete: function() { // Callback for Modal close
-            //alert('Closed');
+            resetModal();
         }
     });
 
@@ -19,4 +16,30 @@ $(document).ready(function() {
     add_button.onclick = function () {
         $('#edit-modal').modal('open');
     };
+
+    resetModal();
+    resetQuestions();
 });
+
+var resetQuestions = function() {
+    $("#questions-wrapper").html("");
+};
+
+var addAnswer = function () {
+    var template = $("#question-edit-answer-template").html();
+    $("#answers-wrapper").append(template);
+};
+
+var resetModal = function() {
+    $("#question").val("");
+
+    $("#answers-wrapper").html("");
+    addAnswer();
+    addAnswer();
+};
+
+var addQuestion = function() {
+    var questionField = $("#question");
+    var question = questionField.val();
+    console.log(question);
+};
