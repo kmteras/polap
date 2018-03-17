@@ -4,7 +4,6 @@
 <head>
     <title th:text="#{questions}">Questions</title>
     <th:block layout:include="fragments/head"/>
-    <th:block layout:include="fragments/question_edit"/>
     <link rel="stylesheet" type="text/css" href="/css/questions.css"/>
     <script src="/js/questions.js"></script>
 </head>
@@ -34,6 +33,7 @@
         </div>
 
     </div>
+    <th:block layout:include="fragments/question_edit"/>
 </main>
 <th:block layout:replace="fragments/footer"/>
 </body>
