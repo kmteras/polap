@@ -1,3 +1,12 @@
+var questions = [
+    {"question": "First Question?", "answers":[
+        {"text": "First Text", "correct": false},
+        {"text": "Second Text", "correct": true},
+        {"text": "Third Text", "correct": false}]},
+    {"question": "Second Question?", "answers": [
+        {"text": "Only Choice", "correct": true}]}
+    ];
+
 $(document).ready(function() {
     $('#edit-modal').modal({
         dismissible: true, // Modal can be dismissed by clicking outside of the modal
@@ -22,7 +31,13 @@ $(document).ready(function() {
 });
 
 var resetQuestions = function() {
-    $("#questions-wrapper").html("");
+    var questions_wrapper = $("#questions-wrapper");
+    questions_wrapper.html("");
+    var template = $("#questions-question-template").html();
+
+    for (var i = 0; i < questions.length; i++) {
+        questions_wrapper.append(template.replace("{question}", questions[i].question));
+    }
 };
 
 var addAnswer = function () {

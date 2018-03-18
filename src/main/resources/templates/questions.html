@@ -1,8 +1,11 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      th:lang="#{language_code}"
+      vocab="http://schema.org/"
+      typeof="WebSite">
 <head>
-    <title th:text="#{questions}">Questions</title>
+    <title th:text="#{questions_title}"></title>
     <th:block layout:include="fragments/head"/>
     <link rel="stylesheet" type="text/css" href="/css/questions.css"/>
     <script src="/js/questions.js"></script>
