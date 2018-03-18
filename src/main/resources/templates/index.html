@@ -1,8 +1,11 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      th:lang="#{language_code}"
+      vocab="http://schema.org/"
+      typeof="WebSite">
 <head>
-    <title>Polap</title>
+    <title th:text="#{frontpage_title}"></title>
     <th:block layout:include="fragments/head"/>
     <link rel="stylesheet" type="text/css" href="/css/index.css"/>
 </head>
@@ -20,7 +23,7 @@
 
                 <div class="col s12 m6 l12">
                     <h5 th:text="#{teacher_dir}">Create polls for your students:</h5>
-                    <a class="btn-large" id="login-btn" th:text="#{teacher_login}" href="/questions"></a>
+                    <a class="btn-large" id="login-btn" th:text="#{teacher_login}" href="/questions" th:alt="#{teacher_login}"></a>
                 </div>
 
                 <div class="col s12 m6 l12">
@@ -29,7 +32,7 @@
                         <input id="session_code" type="text"/>
                         <label for="session_code" th:text="#{session_id}"></label>
                     </div>
-                    <a class="btn" th:text="#{join}"></a>
+                    <a class="btn" th:text="#{join}" th:alt="#{join_session}"></a>
                 </div>
 
             </div>
