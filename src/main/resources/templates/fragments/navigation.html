@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:remove="tag">
+<header>
+    <nav>
+        <div class="nav-wrapper blue">
+            <a href="/" class="brand-logo center" th:alt="#{home_page}">Polap</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+
+                <li><a href="?lang=en" rel="alternate" hreflang="en" th:text="#{en_choice}" th:alt="#{en_choice_long}"></a></li>
+                <li><a href="?lang=et" rel="alternate" hreflang="et" th:text="#{et_choice}" th:alt="#{et_choice_long}"></a></li>
+                <li><a href="/statistics" th:text="#{statistics}" th:alt="#{statistics}"></a></li>
+
+                <li>
+                    <a th:if="${user}" href="#" th:text="${user}"></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+</html>

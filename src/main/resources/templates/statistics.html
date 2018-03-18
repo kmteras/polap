@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      th:lang="#{language_code}"
+      vocab="http://schema.org/"
+      typeof="WebSite">
+<head>
+    <title th:text="#{statistics_title}"></title>
+
+    <th:block layout:include="fragments/head"/>
+
+    <link rel="stylesheet" type="text/css" href="/css/statistics.css"/>
+
+    <script src="/webjars/d3/5.0.0-rc.3/dist/d3.min.js"></script>
+    <script src="/js/pie.js"></script>
+    <script src="/js/histogram.js"></script>
+    <script src="/js/statistics.js"></script>
+</head>
+<body>
+<th:block layout:replace="fragments/navigation"/>
+<div class="container">
+    <h1 th:text="#{statistics_requests} + ': ' + ${requests_count}"></h1>
+    <h3 th:text="#{statistics_requestsph}">Päringuid tunnis</h3>
+    <table class="striped">
+        <thead>
+        <tr>
+            <td th:text="#{statistics_requestsph_time}"></td>
+            <td th:text="#{statistics_requestsph_amount}">Päringute hulk</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="date : ${dateCount}">
+            <td th:text="${date[0]}"></td>
+            <td th:text="${date[1]}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <br/>
+    <br/>
+    <div class="row">
+        <div class="col s6 m6">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title" th:text="#{statistics_visitor_browsers}"></span>
+                    <div class="pi_chart" id="chart0"></div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col s6 m6">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title" th:text="#{statistics_visitor_oss}"></span>
+                    <div class="pi_chart" id="chart1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block layout:replace="fragments/footer"/>
+</body>
+</html>
