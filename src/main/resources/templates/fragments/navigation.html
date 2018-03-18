@@ -8,6 +8,9 @@
                 <li><a href="?lang=en" th:text="#{en_choice}"></a></li>
                 <li><a href="?lang=et" th:text="#{et_choice}"></a></li>
                 <li><a href="/statistics" th:text="#{statistics}"></a></li>
+                <li>
+                    <a th:if="${user}" href="#" th:text="${user}"></a>
+                </li>
             </ul>
         </div>
     </nav>
