@@ -2,11 +2,13 @@ package com.eucolus.poll;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 @SpringBootApplication
+@EnableOAuth2Sso
 public class PollApplication {
     public static void main(String[] args) {
         SpringApplication.run(PollApplication.class, args);
