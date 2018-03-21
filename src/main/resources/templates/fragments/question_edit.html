@@ -7,7 +7,6 @@
     <div class="modal-content" id="question-edit-modal-content">
         <h4 class="center-align" th:text="#{edit_question}">Edit question</h4>
 
-
         <div id="edit-question-form">
             <div class="input-field" id="edit-question-question">
                 <textarea id="question" class="materialize-textarea"></textarea>
@@ -33,7 +32,8 @@
                 <div class="col s12">
                     <p class="center-align">
                         <a href="#!">
-                            <i class="material-icons green-text" id="add-answer-icon" onclick="addAnswer()">add_circle</i>
+                            <i class="material-icons green-text" id="add-answer-icon"
+                               onclick="addAnswer()">add_circle</i>
                         </a>
                     </p>
                 </div>
@@ -42,7 +42,8 @@
     </div>
     <div class="modal-footer">
         <p class="center-align" id="modal-close-button-wrap">
-            <a href="#!" class="modal-action modal-close btn green" id="modal-close-button" onclick="addQuestion()" th:text="#{done}"></a>
+            <a href="#!" class="modal-action modal-close btn green" id="modal-close-button" onclick="addQuestion()"
+               th:text="#{done}"></a>
         </p>
     </div>
 </div>
