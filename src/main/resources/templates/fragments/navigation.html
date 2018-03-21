@@ -14,7 +14,8 @@
                 </a></li>
 
                 <li>
-                    <a th:if="${user}" href="#" th:text="${user}"></a>
+                    <a th:if="${user}" id="user_dropdown_button" class="dropdown-trigger" href="#" data-target="user_dropdown" th:text="${user}"></a>
+                    <a th:unless="${user}" href="/google/login" th:text="#{login}"></a>
                 </li>
             </ul>
         </div>
@@ -22,6 +23,13 @@
     <ul id="language_dropdown" class="dropdown-content">
         <li><a href="?lang=en" rel="alternate" hreflang="en" th:text="#{en_choice}"></a></li>
         <li><a href="?lang=et" rel="alternate" hreflang="et" th:text="#{et_choice}"></a></li>
+    </ul>
+
+    <ul id="user_dropdown" class="dropdown-content">
+        <li><a href="#" th:text="#{profile}"></a></li>
+        <li><a href="#" th:text="#{settings}"></a></li>
+        <li class="divider" tabindex="-1"></li>
+        <li><a href="/logout" th:text="#{logout}"></a></li>
     </ul>
 </header>
 </html>
