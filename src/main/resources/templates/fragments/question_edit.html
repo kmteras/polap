@@ -5,23 +5,20 @@
 
 <div id="edit-modal" class="modal modal-fixed-footer">
     <div class="modal-content" id="question-edit-modal-content">
-
         <h4 class="center-align" th:text="#{edit_question}">Edit question</h4>
 
         <div id="edit-question-form">
-
             <div class="input-field" id="edit-question-question">
                 <textarea id="question" class="materialize-textarea"></textarea>
                 <label for="question" th:text="#{question}"></label>
             </div>
 
             <div class="row" id="edit-question-hint">
-
-                <div class="input-field col s3">
+                <div class="input-field col s1">
                     <h6 class="center-align" th:text="#{correct}">Correct?</h6>
                 </div>
 
-                <div class="input-field col s7">
+                <div class="input-field col s10">
                     <h6 class="center-align" th:text="#{answer}">Answer</h6>
                 </div>
 
@@ -31,24 +28,22 @@
                 <th:block layout:replace="fragments/question_edit_answer"/>
             </div>
 
-
             <div class="row">
-
-                <div class="col s2 offset-s10">
+                <div class="col s12">
                     <p class="center-align">
                         <a href="#!">
-                            <i class="material-icons green-text" id="add-answer-icon" onclick="addAnswer()">add_circle</i>
+                            <i class="material-icons green-text" id="add-answer-icon"
+                               onclick="addAnswer()">add_circle</i>
                         </a>
                     </p>
                 </div>
-
             </div>
-
         </div>
     </div>
     <div class="modal-footer">
         <p class="center-align" id="modal-close-button-wrap">
-            <a href="#!" class="modal-action modal-close btn green" id="modal-close-button" onclick="addQuestion()" th:text="#{done}"></a>
+            <a href="#!" class="modal-action modal-close btn green" id="modal-close-button" onclick="addQuestion()"
+               th:text="#{done}"></a>
         </p>
     </div>
 </div>

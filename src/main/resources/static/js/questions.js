@@ -40,9 +40,23 @@ var resetQuestions = function() {
     }
 };
 
+var answerCount = 0;
+
 var addAnswer = function () {
-    var template = $("#question-edit-answer-template").html();
-    $("#answers-wrapper").append(template);
+    var $template = $("#question-edit-answer-template").clone();
+
+    $template.attr("id", "answer_row_" + answerCount);
+    $template.find(".remove-button").attr("answer_id", answerCount);
+    $template.find(".remove-button").on('click', removeAnswer);
+
+    $("#answers-wrapper").append($template);
+    answerCount++;
+};
+
+function removeAnswer(event) {
+    var $target = $(event.target);
+    var id = $target.attr("answer_id");
+    $("#answer_row_" + id).remove();
 };
 
 var resetModal = function() {
