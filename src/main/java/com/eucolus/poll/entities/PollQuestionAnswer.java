@@ -11,6 +11,7 @@ public class PollQuestionAnswer {
     private String text;
     @ManyToOne
     private PollQuestion question;
+    private Boolean rightAnswer;
 
     public Integer getId() {
         return id;
@@ -34,5 +35,13 @@ public class PollQuestionAnswer {
 
     public void setQuestion(PollQuestion question) {
         this.question = question;
+    }
+
+    public Boolean getRightAnswer() {
+        return rightAnswer;
+    }
+
+    public void setRightAnswer(Boolean rightAnswer) {
+        this.rightAnswer = rightAnswer;
     }
 }

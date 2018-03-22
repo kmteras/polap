@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:remove="tag">
+<ul id="questions-question-template">
+    <li class="collection-item">
+        <div>
+            <span class="question-text" th:text="${poll.title}">{question}</span>
+            <span class="secondary-content">
+                <a th:href="@{/polls/{id}(id=${poll.id})}">
+                    <i class="material-icons question-list-icon">edit</i>
+                </a>
+                <a href="#" >
+                    <i class="material-icons question-list-icon red-text text-darken-3">delete</i>
+                </a>
+            </span>
+        </div>
+    </li>
+</ul>
+</html>

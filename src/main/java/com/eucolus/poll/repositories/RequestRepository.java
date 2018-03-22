@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface RequestRepository extends CrudRepository<Request, Long> {
+public interface RequestRepository extends CrudRepository<Request, Integer> {
     @Query(value = "SELECT * FROM only_main_requests", nativeQuery = true)
     List<Request> findAll();
 

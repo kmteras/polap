@@ -13,8 +13,6 @@ public class PollQuestion {
     private Boolean multipleChoice;
     @OneToMany(mappedBy = "question")
     private List<PollQuestionAnswer> questionAnswers;
-    @OneToMany(mappedBy = "question")
-    private List<PollQuestionAnswer> rightPollQuestionAnswers;
     @ManyToOne
     private Poll poll;
 
@@ -48,14 +46,6 @@ public class PollQuestion {
 
     public void setQuestionAnswers(List<PollQuestionAnswer> questionAnswers) {
         this.questionAnswers = questionAnswers;
-    }
-
-    public List<PollQuestionAnswer> getRightPollQuestionAnswers() {
-        return rightPollQuestionAnswers;
-    }
-
-    public void setRightPollQuestionAnswers(List<PollQuestionAnswer> rightPollQuestionAnswers) {
-        this.rightPollQuestionAnswers = rightPollQuestionAnswers;
     }
 
     public Poll getPoll() {
