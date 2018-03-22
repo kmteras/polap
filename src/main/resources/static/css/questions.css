@@ -13,7 +13,7 @@
 }
 
 .add-question-icon {
-    font-size: 5.6em;
+    font-size: 4em;
 }
 
 /* question edit overlay */
@@ -59,4 +59,12 @@
 
 .answer-checkbox-span {
     height: 0 !important;
+}
+
+.icon-h3 {
+    display: inline;
+}
+
+#title_edit_div {
+    display: none;
 }

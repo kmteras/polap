@@ -11,7 +11,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping(path="/api/requests")
-public class RequestAPIController {
+public class RequestApiController {
     @Autowired
     private RequestRepository requestRepository;
 

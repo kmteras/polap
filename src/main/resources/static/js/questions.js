@@ -7,7 +7,11 @@ var questions = [
         {"text": "Only Choice", "correct": true}]}
     ];
 
+var pollId = 0;
+
 $(document).ready(function() {
+    pollId = $
+
     $('#edit-modal').modal({
         dismissible: true, // Modal can be dismissed by clicking outside of the modal
         opacity: .5, // Opacity of modal background
@@ -25,6 +29,12 @@ $(document).ready(function() {
     add_button.onclick = function () {
         $('#edit-modal').modal('open');
     };
+
+    $(document).keyup(function(event) {
+        if ($("#poll_title_input").is(":focus") && event.key === "Enter") {
+            finishEditTitle()
+        }
+    });
 
     resetModal();
     resetQuestions();
@@ -45,6 +55,8 @@ var answerCount = 0;
 var addAnswer = function () {
     var $template = $("#question-edit-answer-template").clone();
 
+    console.log($template.html());
+
     $template.attr("id", "answer_row_" + answerCount);
     $template.find(".remove-button").attr("answer_id", answerCount);
     $template.find(".remove-button").on('click', removeAnswer);
@@ -57,7 +69,7 @@ function removeAnswer(event) {
     var $target = $(event.target);
     var id = $target.attr("answer_id");
     $("#answer_row_" + id).remove();
-};
+}
 
 var resetModal = function() {
     $("#question").val("");
@@ -72,3 +84,25 @@ var addQuestion = function() {
     var question = questionField.val();
     console.log(question);
 };
+
+function toggleEditTitle() {
+    $("#title_edit_div").show();
+    $("#title_div").hide();
+
+    $("#poll_title_input").val($("#poll_title").text());
+}
+
+function finishEditTitle() {
+    cancelEditTitle();
+    var $poll_title = $("#poll_title_input").val();
+    $("#poll_title").text($poll_title);
+
+    $.post("/api/requests/" + pollId + "/title", $poll_title);
+    console.log($poll_title);
+}
+
+function cancelEditTitle() {
+    $("#title_edit_div").hide();
+    $("#title_div").show();
+}
+

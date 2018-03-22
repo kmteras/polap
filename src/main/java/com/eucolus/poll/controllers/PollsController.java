@@ -26,7 +26,12 @@ public class PollsController {
     }
 
     @RequestMapping("/polls/{pollId}")
-    public String poll(@PathVariable(value="pollId") Integer pollId, Model model) {
+    public String poll(@PathVariable(value="pollId") Integer pollId, Model model, Principal user) {
+        if(user != null)
+            model.addAttribute("user", user.getName());
+        else
+            model.addAttribute("user", null);
+
         model.addAttribute("poll", pollRepository.findOne(pollId));
         return "questions";
     }
