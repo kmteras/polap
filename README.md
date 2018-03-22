@@ -1,4 +1,7 @@
 # Building
+Downloading files  
+`git clone https://github.com/Teras23/poll_application.git`
+
 Before building the application `src/main/resources/application.yml` if needed.
 ```yml
 spring:
@@ -31,3 +34,10 @@ server:
     enabled: true
     mime-types: text/html,text/css,application/javascript,application/json
 ```
+
+Installing gradle  
+`sudo apt-get install gradle`  
+  
+Building  
+`cd poll_application`  
+`gradle build`
