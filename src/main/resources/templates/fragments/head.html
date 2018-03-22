@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" th:remove="tag">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
 <meta name="application-name" content="Polap"/>
@@ -12,6 +12,9 @@
 <meta property="interactivityType" content="active"/>
 <meta property="isAccessibleForFree" datatype="xsd:boolean" content="true"/>
 <meta property="isFamilyFriendly" datatype="xsd:boolean" content="true"/>
+
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 

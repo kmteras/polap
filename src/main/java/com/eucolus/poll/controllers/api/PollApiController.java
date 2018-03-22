@@ -1,11 +1,13 @@
 package com.eucolus.poll.controllers.api;
 
+import com.eucolus.poll.entities.Poll;
 import com.eucolus.poll.repositories.PollRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(path="/api/polls")
@@ -15,8 +17,10 @@ public class PollApiController {
 
     @PostMapping("/{pollId}/title")
     public @ResponseBody
-    Boolean getDateHist(@PathVariable(value="pollId") Integer pollId, @RequestBody String title) {
-        System.out.println(title);
+    Boolean getDateHist(@PathVariable(value="pollId") Integer pollId, @RequestParam Map<String, String> params) {
+        Poll poll = pollRepository.findOne(pollId);
+        poll.setTitle(params.get("title"));
+        pollRepository.save(poll);
         return true;
     }
 }

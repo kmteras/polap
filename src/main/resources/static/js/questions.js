@@ -1,16 +1,24 @@
 var questions = [
-    {"question": "First Question?", "answers":[
-        {"text": "First Text", "correct": false},
-        {"text": "Second Text", "correct": true},
-        {"text": "Third Text", "correct": false}]},
-    {"question": "Second Question?", "answers": [
-        {"text": "Only Choice", "correct": true}]}
-    ];
+    {
+        "question": "First Question?", "answers": [
+            {"text": "First Text", "correct": false},
+            {"text": "Second Text", "correct": true},
+            {"text": "Third Text", "correct": false}]
+    },
+    {
+        "question": "Second Question?", "answers": [
+            {"text": "Only Choice", "correct": true}]
+    }
+];
 
-var pollId = 0;
+var pollId;
+var token;
+var header;
 
-$(document).ready(function() {
-    pollId = $
+$(document).ready(function () {
+    pollId = $("#poll_id").attr("content");
+    token = $('#_csrf').attr('content');
+    header = $('#_csrf_header').attr('content');
 
     $('#edit-modal').modal({
         dismissible: true, // Modal can be dismissed by clicking outside of the modal
@@ -19,8 +27,9 @@ $(document).ready(function() {
         outDuration: 200, // Transition out duration
         startingTop: '4%', // Starting top style attribute
         endingTop: '10%', // Ending top style attribute
-        ready: function(modal, trigger) {}, // Callback for Modal open. Modal and trigger parameters available.
-        complete: function() { // Callback for Modal close
+        ready: function (modal, trigger) {
+        }, // Callback for Modal open. Modal and trigger parameters available.
+        complete: function () { // Callback for Modal close
             resetModal();
         }
     });
@@ -30,7 +39,7 @@ $(document).ready(function() {
         $('#edit-modal').modal('open');
     };
 
-    $(document).keyup(function(event) {
+    $(document).keyup(function (event) {
         if ($("#poll_title_input").is(":focus") && event.key === "Enter") {
             finishEditTitle()
         }
@@ -40,7 +49,7 @@ $(document).ready(function() {
     resetQuestions();
 });
 
-var resetQuestions = function() {
+var resetQuestions = function () {
     var questions_wrapper = $("#questions-wrapper");
     questions_wrapper.html("");
     var template = $("#questions-question-template").html();
@@ -54,8 +63,6 @@ var answerCount = 0;
 
 var addAnswer = function () {
     var $template = $("#question-edit-answer-template").clone();
-
-    console.log($template.html());
 
     $template.attr("id", "answer_row_" + answerCount);
     $template.find(".remove-button").attr("answer_id", answerCount);
@@ -71,7 +78,7 @@ function removeAnswer(event) {
     $("#answer_row_" + id).remove();
 }
 
-var resetModal = function() {
+var resetModal = function () {
     $("#question").val("");
 
     $("#answers-wrapper").html("");
@@ -79,10 +86,9 @@ var resetModal = function() {
     addAnswer();
 };
 
-var addQuestion = function() {
+var addQuestion = function () {
     var questionField = $("#question");
     var question = questionField.val();
-    console.log(question);
 };
 
 function toggleEditTitle() {
@@ -94,11 +100,34 @@ function toggleEditTitle() {
 
 function finishEditTitle() {
     cancelEditTitle();
-    var $poll_title = $("#poll_title_input").val();
-    $("#poll_title").text($poll_title);
+    var $poll_title = $("#poll_title");
+    var oldVal = $poll_title.text();
+    var poll_title = $("#poll_title_input").val();
+    $poll_title.text(poll_title);
 
-    $.post("/api/requests/" + pollId + "/title", $poll_title);
-    console.log($poll_title);
+    var url = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
+
+    console.log(url + "/api/polls/" + pollId + "/title");
+
+    $.ajax({
+            url: url + "/api/polls/" + pollId + "/title",
+            data:
+                {
+                    title: poll_title
+                }
+            ,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            type: "POST",
+            success: function (msg) {
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                $poll_title.text(oldVal);
+                console.log(XMLHttpRequest);
+            }
+        }
+    );
 }
 
 function cancelEditTitle() {

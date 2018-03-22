@@ -9,12 +9,12 @@
     <th:block layout:include="fragments/head"/>
     <link rel="stylesheet" type="text/css" href="/css/questions.css"/>
     <script src="/js/questions.js"></script>
+
+    <meta id="poll_id" name="pollId" th:content="${poll.id}"/>
 </head>
 <body>
 <th:block layout:replace="fragments/navigation"/>
 <main>
-    <div id="poll" th:attr="data-id=${poll.id}"></div>
-
     <div class="container">
         <div id="title_div" class="center-align">
             <h3 id="poll_title" class="icon-h3" th:text="${poll.title}"></h3>
