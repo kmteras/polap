@@ -1,12 +1,16 @@
 var questions = [
     {
-        "question": "First Question?", "answers": [
+        "id": 0,
+        "question": "First Question?",
+        "answers": [
             {"text": "First Text", "correct": false},
             {"text": "Second Text", "correct": true},
             {"text": "Third Text", "correct": false}]
     },
     {
-        "question": "Second Question?", "answers": [
+        "id": 1,
+        "question": "Second Question?",
+        "answers": [
             {"text": "Only Choice", "correct": true}]
     }
 ];
@@ -52,13 +56,13 @@ $(document).ready(function () {
 var resetQuestions = function () {
     var questions_wrapper = $("#questions-wrapper");
     questions_wrapper.html("");
-    var template = $("#questions-question-template").html();
 
     for (var i = 0; i < questions.length; i++) {
-        questions_wrapper.append(template.replace("{question}", questions[i].question));
+        addQuestion(i)
     }
 };
 
+var questionCount = 0;
 var answerCount = 0;
 
 var addAnswer = function () {
@@ -86,9 +90,27 @@ var resetModal = function () {
     addAnswer();
 };
 
-var addQuestion = function () {
-    var questionField = $("#question");
-    var question = questionField.val();
+var addQuestion = function (index) {
+
+    var questionData = questions[index];
+
+    var $template = $("#questions-question-template > li").first().clone();
+    //$template.replace("{question}", questionData.question).trim().replace("\n","").replace("  "," ");
+
+    $template.attr("id", "question_row_" + questionData.id);
+    $template.find(".question-text").html(questionData.question);
+    $template.find(".remove-button").attr("question_id", questionData.id);
+    $template.find(".remove-button").on('click', removeQuestion);
+
+    $("#questions-wrapper").append($template);
+    questionCount++;
+};
+
+var removeQuestion = function(event) {
+    console.log("click");
+    var $target = $(event.target);
+    var id = $target.attr("question_id");
+    $("#question_row_" + id).remove();
 };
 
 function toggleEditTitle() {
