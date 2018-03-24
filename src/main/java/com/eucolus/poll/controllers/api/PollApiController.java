@@ -23,4 +23,15 @@ public class PollApiController {
         pollRepository.save(poll);
         return true;
     }
+
+    @DeleteMapping("/{pollId}")
+    public @ResponseBody
+    Boolean getDateHist(@PathVariable(value="pollId") Integer pollId) {
+        Poll poll = pollRepository.findOne(pollId);
+
+        if(poll != null) {
+            pollRepository.delete(pollId);
+        }
+        return true;
+    }
 }

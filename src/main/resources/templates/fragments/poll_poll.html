@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:remove="tag">
 <ul id="questions-question-template">
-    <li class="collection-item">
+    <li class="collection-item" th:id="'poll_' + ${poll.id}">
         <div>
             <span class="question-text" th:text="${poll.title}">{question}</span>
             <span class="secondary-content">
                 <a th:href="@{/polls/{id}(id=${poll.id})}">
                     <i class="material-icons question-list-icon">edit</i>
                 </a>
-                <a>
+                <a href="#" th:attr="data-id=${poll.id}" th:class="delete-button">
                     <i class="material-icons question-list-icon red-text text-darken-3">delete</i>
                 </a>
             </span>
