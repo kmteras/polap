@@ -25,7 +25,7 @@ $(document).ready(function () {
     header = $('#_csrf_header').attr('content');
 
     $('#edit-modal').modal({
-        dismissible: true, // Modal can be dismissed by clicking outside of the modal
+        dismissible: true, // Modal can be dismissed by clicking outside
         opacity: .5, // Opacity of modal background
         inDuration: 300, // Transition in duration
         outDuration: 200, // Transition out duration
@@ -50,10 +50,10 @@ $(document).ready(function () {
     });
 
     resetModal();
-    resetQuestions();
+    buildQuestions();
 });
 
-var resetQuestions = function () {
+var buildQuestions = function () {
     var questions_wrapper = $("#questions-wrapper");
     questions_wrapper.html("");
 
@@ -90,12 +90,34 @@ var resetModal = function () {
     addAnswer();
 };
 
+var createQuestion = function () {
+    var id = questionCount;
+    var question = $("#question").val();
+    var questionData = {
+        "id": id,
+        "question": question,
+        "answers": []
+    };
+
+    $("#answers-wrapper").children().each(function () {
+        var correct = $(this).find('input[type="checkbox"]').first().prop("checked");
+        var answer = $(this).find('input[type="text"]').first().val();
+        questionData.answers.push({
+            "text": answer,
+            "correct": correct
+        });
+    });
+
+    questions.push(questionData);
+    addQuestion(questions.length - 1);
+    resetModal();
+};
+
 var addQuestion = function (index) {
 
     var questionData = questions[index];
 
     var $template = $("#questions-question-template > li").first().clone();
-    //$template.replace("{question}", questionData.question).trim().replace("\n","").replace("  "," ");
 
     $template.attr("id", "question_row_" + questionData.id);
     $template.find(".question-text").html(questionData.question);
@@ -106,8 +128,7 @@ var addQuestion = function (index) {
     questionCount++;
 };
 
-var removeQuestion = function(event) {
-    console.log("click");
+var removeQuestion = function (event) {
     var $target = $(event.target);
     var id = $target.attr("question_id");
     $("#question_row_" + id).remove();
