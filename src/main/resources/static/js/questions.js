@@ -19,6 +19,8 @@ var pollId;
 var token;
 var header;
 
+var currentlyEditingQuestionId = null;
+
 $(document).ready(function () {
     pollId = $("#poll_id").attr("content");
     token = $('#_csrf').attr('content');
@@ -39,9 +41,7 @@ $(document).ready(function () {
     });
 
     var add_button = document.getElementById("add-question-button");
-    add_button.onclick = function () {
-        $('#edit-modal').modal('open');
-    };
+    add_button.onclick = openAddModal;
 
     $(document).keyup(function (event) {
         if ($("#poll_title_input").is(":focus") && event.key === "Enter") {
@@ -84,10 +84,11 @@ function removeAnswer(event) {
 
 var resetModal = function () {
     $("#question").val("");
-
+    $('#modal-close-button').prop('onclick',null).off('click');
     $("#answers-wrapper").html("");
-    addAnswer();
-    addAnswer();
+    answerCount = 0;
+    //addAnswer();
+    //addAnswer();
 };
 
 var createQuestion = function () {
@@ -110,7 +111,6 @@ var createQuestion = function () {
 
     questions.push(questionData);
     addQuestion(questions.length - 1);
-    resetModal();
 };
 
 var addQuestion = function (index) {
@@ -121,8 +121,11 @@ var addQuestion = function (index) {
 
     $template.attr("id", "question_row_" + questionData.id);
     $template.find(".question-text").html(questionData.question);
+
     $template.find(".remove-button").attr("question_id", questionData.id);
     $template.find(".remove-button").on('click', removeQuestion);
+    $template.find(".edit-button").attr("question_id", questionData.id);
+    $template.find(".edit-button").on('click', openEditModal);
 
     $("#questions-wrapper").append($template);
     questionCount++;
@@ -132,6 +135,79 @@ var removeQuestion = function (event) {
     var $target = $(event.target);
     var id = $target.attr("question_id");
     $("#question_row_" + id).remove();
+};
+
+var openAddModal = function () {
+    resetModal();
+    addAnswer();
+    addAnswer();
+    $("#modal-close-button").click(createQuestion);
+    $('#edit-modal').modal('open');
+};
+
+var openEditModal = function(event) {
+    /*$("#question").val("");
+    var answers_wrapper = $("#answers-wrapper");
+    answers_wrapper.html("");*/
+
+    resetModal();
+
+    var $target = $(event.target);
+    var id = Number($target.attr("question_id"));
+    currentlyEditingQuestionId = id;
+
+    var questionData;
+    for (var i = 0; i < questions.length; i++) {
+
+        if (questions[i].id === id) {
+            questionData = questions[i];
+            break;
+        }
+    }
+    if (questionData === null || questionData === undefined) {
+        console.log("questionData not found");
+    }
+
+    $("#question").val(questionData.question);
+
+    for (var j = 0; j < questionData.answers.length; j++) {
+
+        var correct = questionData.answers[j].correct;
+        var answer = questionData.answers[j].text;
+
+        addAnswer();
+        // answerCount has been reset, every addQuestion adds
+        // a question with id-s starting from 0 again
+        var answerRow = $("#answer_row_" + j.toString());
+        answerRow.find('input[type="checkbox"]').prop("checked", correct);
+        answerRow.find('input[type="text"]').val(answer);
+    }
+
+    $("#modal-close-button").click(editQuestion);
+    $('#edit-modal').modal('open');
+};
+
+var editQuestion = function() {
+    // kustuta eelmine ja createQuestion
+    var id = currentlyEditingQuestionId;
+    var previousData;
+
+    for (var i = 0; i < questions.length; i++) {
+        if (questions[i].id === id) {
+            previousData = questions[i];
+            questions.splice(id, 1);
+            break;
+        }
+    }
+    if (previousData === null || previousData === undefined) {
+        console.log("previousData not found");
+    }
+
+    $("#question_row_" + id).remove();
+
+    createQuestion();
+
+    currentlyEditingQuestionId = null;
 };
 
 function toggleEditTitle() {
