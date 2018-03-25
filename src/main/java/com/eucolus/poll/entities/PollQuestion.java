@@ -1,5 +1,7 @@
 package com.eucolus.poll.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -13,6 +15,7 @@ public class PollQuestion {
     private Boolean multipleChoice;
     @OneToMany(mappedBy = "question")
     private List<PollQuestionAnswer> questionAnswers;
+    @JsonIgnore
     @ManyToOne
     private Poll poll;
 

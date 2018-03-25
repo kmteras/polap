@@ -1,5 +1,7 @@
 package com.eucolus.poll.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,6 +11,7 @@ public class PollQuestionAnswer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String text;
+    @JsonIgnore
     @ManyToOne
     private PollQuestion question;
     private Boolean rightAnswer;

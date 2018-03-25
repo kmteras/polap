@@ -1,31 +1,15 @@
-var questions = [
-    {
-        "id": 0,
-        "question": "First Question?",
-        "answers": [
-            {"text": "First Text", "correct": false},
-            {"text": "Second Text", "correct": true},
-            {"text": "Third Text", "correct": false}]
-    },
-    {
-        "id": 1,
-        "question": "Second Question?",
-        "answers": [
-            {"text": "Only Choice", "correct": true}]
-    }
-];
-
+var poll;
 var pollId;
 var token;
 var header;
-
+var url;
 var currentlyEditingQuestionId = null;
 
 $(document).ready(function () {
     pollId = $("#poll_id").attr("content");
     token = $('#_csrf').attr('content');
     header = $('#_csrf_header').attr('content');
-
+    url = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
     $('#edit-modal').modal({
         dismissible: true, // Modal can be dismissed by clicking outside
         opacity: .5, // Opacity of modal background
@@ -51,23 +35,31 @@ $(document).ready(function () {
         }
     });
 
+    getQuestions();
+
     resetModal();
-    buildQuestions();
 });
 
-var buildQuestions = function () {
-    var questions_wrapper = $("#questions-wrapper");
-    questions_wrapper.html("");
+function getQuestions() {
+    $.getJSON(url + "/api/polls/" + pollId, function(data) {
+        poll = data;
+        buildQuestions();
+    })
+}
 
-    for (var i = 0; i < questions.length; i++) {
+function buildQuestions() {
+    var $questions_wrapper = $("#questions-wrapper");
+    $questions_wrapper.html("");
+
+    for (var i = 0; i < poll["questions"].length; i++) {
         addQuestion(i)
     }
-};
+}
 
 var questionCount = 0;
 var answerCount = 0;
 
-var addAnswer = function () {
+function addAnswer() {
     var $template = $("#question-edit-answer-template").clone();
 
     $template.attr("id", "answer_row_" + answerCount);
@@ -76,22 +68,29 @@ var addAnswer = function () {
 
     $("#answers-wrapper").append($template);
     answerCount++;
-};
+    if(answerCount >= 4) {
+        $("#add_answer_button").hide();
+    }
+}
 
 function removeAnswer(event) {
     var $target = $(event.target);
     var id = $target.attr("answer_id");
     $("#answer_row_" + id).remove();
+    if(answerCount < 4) {
+        $("#add_answer_button").hide();
+    }
+    answerCount--;
 }
 
-var resetModal = function () {
+function resetModal() {
     $("#question").val("");
-    $('#modal-close-button').prop('onclick',null).off('click');
+    $('#modal-close-button').prop('onclick', null).off('click');
     $("#answers-wrapper").html("");
     answerCount = 0;
-};
+}
 
-var createQuestion = function () {
+function createQuestion() {
     var id = questionCount;
     var question = $("#question").val();
     var questionData = {
@@ -109,14 +108,11 @@ var createQuestion = function () {
         });
     });
 
-    questions.push(questionData);
-    addQuestion(questions.length - 1);
-};
+    poll["questions"].push(questionData);
+    addQuestion(questionData);
+}
 
-var addQuestion = function (index) {
-
-    var questionData = questions[index];
-
+function addQuestion(questionData) {
     var $template = $("#questions-question-template > li").first().clone();
 
     $template.attr("id", "question_row_" + questionData.id);
@@ -129,23 +125,23 @@ var addQuestion = function (index) {
 
     $("#questions-wrapper").append($template);
     questionCount++;
-};
+}
 
-var removeQuestion = function (event) {
+function removeQuestion(event) {
     var $target = $(event.target);
     var id = $target.attr("question_id");
     $("#question_row_" + id).remove();
-};
+}
 
-var openAddModal = function () {
+function openAddModal() {
     resetModal();
     addAnswer();
     addAnswer();
     $("#modal-close-button").click(createQuestion);
     $('#edit-modal').modal('open');
-};
+}
 
-var openEditModal = function(event) {
+function openEditModal(event) {
 
     resetModal();
 
@@ -154,10 +150,10 @@ var openEditModal = function(event) {
     currentlyEditingQuestionId = id;
 
     var questionData;
-    for (var i = 0; i < questions.length; i++) {
+    for (var i = 0; i < poll["questions"].length; i++) {
 
-        if (questions[i].id === id) {
-            questionData = questions[i];
+        if (poll["questions"][i].id === id) {
+            questionData = poll["questions"][i];
             break;
         }
     }
@@ -167,10 +163,10 @@ var openEditModal = function(event) {
 
     $("#question").val(questionData.question);
 
-    for (var j = 0; j < questionData.answers.length; j++) {
+    for (var j = 0; j < questionData["questionAnswers"].length; j++) {
 
-        var correct = questionData.answers[j].correct;
-        var answer = questionData.answers[j].text;
+        var correct = questionData["questionAnswers"][j].correct;
+        var answer = questionData["questionAnswers"][j].text;
 
         addAnswer();
         // answerCount has been reset, every addQuestion adds
@@ -182,17 +178,16 @@ var openEditModal = function(event) {
 
     $("#modal-close-button").click(editQuestion);
     $('#edit-modal').modal('open');
-};
+}
 
-var editQuestion = function() {
-
+function editQuestion() {
     var id = currentlyEditingQuestionId;
     var previousData;
 
-    for (var i = 0; i < questions.length; i++) {
-        if (questions[i].id === id) {
-            previousData = questions[i];
-            questions.splice(id, 1);
+    for (var i = 0; i < poll["questions"].length; i++) {
+        if (poll["questions"][i].id === id) {
+            previousData = poll["questions"][i];
+            poll["questions"].splice(id, 1);
             break;
         }
     }
@@ -205,7 +200,7 @@ var editQuestion = function() {
     createQuestion();
 
     currentlyEditingQuestionId = null;
-};
+}
 
 function toggleEditTitle() {
     $("#title_edit_div").show();
@@ -217,33 +212,9 @@ function toggleEditTitle() {
 function finishEditTitle() {
     cancelEditTitle();
     var $poll_title = $("#poll_title");
-    var oldVal = $poll_title.text();
     var poll_title = $("#poll_title_input").val();
     $poll_title.text(poll_title);
-
-    var url = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
-
-    console.log(url + "/api/polls/" + pollId + "/title");
-
-    $.ajax({
-            url: url + "/api/polls/" + pollId + "/title",
-            data:
-                {
-                    title: poll_title
-                }
-            ,
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader(header, token);
-            },
-            type: "POST",
-            success: function (msg) {
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                $poll_title.text(oldVal);
-                console.log(XMLHttpRequest);
-            }
-        }
-    );
+    poll["title"] = poll_title;
 }
 
 function cancelEditTitle() {
@@ -251,6 +222,25 @@ function cancelEditTitle() {
     $("#title_div").show();
 }
 
-var savePoll = function () {
-  // save questions to database
-};
+function savePoll() {
+    console.log(poll);
+
+    $.ajax({
+            url: url + "/api/polls/" + pollId,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(poll)
+            ,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            type: "POST",
+            success: function (msg) {
+                window.location.replace("/polls");
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log(XMLHttpRequest);
+            }
+        }
+    );
+}
