@@ -43,6 +43,7 @@ $(document).ready(function () {
 function getQuestions() {
     $.getJSON(url + "/api/polls/" + pollId, function(data) {
         poll = data;
+        console.log(data);
         buildQuestions();
     })
 }
@@ -52,7 +53,7 @@ function buildQuestions() {
     $questions_wrapper.html("");
 
     for (var i = 0; i < poll["questions"].length; i++) {
-        addQuestion(i)
+        addQuestion(poll["questions"][i])
     }
 }
 
@@ -94,16 +95,16 @@ function createQuestion() {
     var id = questionCount;
     var question = $("#question").val();
     var questionData = {
-        "id": id,
+        "htmlId": id,
         "question": question,
-        "answers": []
+        "questionAnswers": []
     };
 
     $("#answers-wrapper").children().each(function () {
         var correct = $(this).find('input[type="checkbox"]').first().prop("checked");
         var answer = $(this).find('input[type="text"]').first().val();
-        questionData.answers.push({
-            "text": answer,
+        questionData.questionAnswers.push({
+            "answer": answer,
             "correct": correct
         });
     });
@@ -115,12 +116,16 @@ function createQuestion() {
 function addQuestion(questionData) {
     var $template = $("#questions-question-template > li").first().clone();
 
-    $template.attr("id", "question_row_" + questionData.id);
+    if(questionData.htmlId === undefined) {
+        questionData.htmlId = questionCount;
+    }
+
+    $template.attr("id", "question_row_" + questionData.htmlId);
     $template.find(".question-text").html(questionData.question);
 
-    $template.find(".remove-button").attr("question_id", questionData.id);
+    $template.find(".remove-button").attr("question_id", questionData.htmlId);
     $template.find(".remove-button").on('click', removeQuestion);
-    $template.find(".edit-button").attr("question_id", questionData.id);
+    $template.find(".edit-button").attr("question_id", questionData.htmlId);
     $template.find(".edit-button").on('click', openEditModal);
 
     $("#questions-wrapper").append($template);
@@ -129,8 +134,15 @@ function addQuestion(questionData) {
 
 function removeQuestion(event) {
     var $target = $(event.target);
-    var id = $target.attr("question_id");
+    var id = Number($target.attr("question_id"));
     $("#question_row_" + id).remove();
+
+    for (var i = 0; i < poll["questions"].length; i++) {
+        if (poll["questions"][i].htmlId === id) {
+            poll["questions"].splice(i, 1);
+            break;
+        }
+    }
 }
 
 function openAddModal() {
@@ -142,7 +154,6 @@ function openAddModal() {
 }
 
 function openEditModal(event) {
-
     resetModal();
 
     var $target = $(event.target);
@@ -151,8 +162,7 @@ function openEditModal(event) {
 
     var questionData;
     for (var i = 0; i < poll["questions"].length; i++) {
-
-        if (poll["questions"][i].id === id) {
+        if (poll["questions"][i].htmlId === id) {
             questionData = poll["questions"][i];
             break;
         }
@@ -166,7 +176,7 @@ function openEditModal(event) {
     for (var j = 0; j < questionData["questionAnswers"].length; j++) {
 
         var correct = questionData["questionAnswers"][j].correct;
-        var answer = questionData["questionAnswers"][j].text;
+        var answer = questionData["questionAnswers"][j].answer;
 
         addAnswer();
         // answerCount has been reset, every addQuestion adds
@@ -185,7 +195,7 @@ function editQuestion() {
     var previousData;
 
     for (var i = 0; i < poll["questions"].length; i++) {
-        if (poll["questions"][i].id === id) {
+        if (poll["questions"][i].htmlId === id) {
             previousData = poll["questions"][i];
             poll["questions"].splice(id, 1);
             break;

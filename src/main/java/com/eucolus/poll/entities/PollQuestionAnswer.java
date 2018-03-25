@@ -10,11 +10,11 @@ public class PollQuestionAnswer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private String text;
+    private String answer;
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private PollQuestion question;
-    private Boolean rightAnswer;
+    private Boolean correct;
 
     public Integer getId() {
         return id;
@@ -24,12 +24,12 @@ public class PollQuestionAnswer {
         this.id = id;
     }
 
-    public String getText() {
-        return text;
+    public String getAnswer() {
+        return answer;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setAnswer(String text) {
+        this.answer = answer;
     }
 
     public PollQuestion getQuestion() {
@@ -40,11 +40,11 @@ public class PollQuestionAnswer {
         this.question = question;
     }
 
-    public Boolean getRightAnswer() {
-        return rightAnswer;
+    public Boolean isCorrect() {
+        return correct;
     }
 
-    public void setRightAnswer(Boolean rightAnswer) {
-        this.rightAnswer = rightAnswer;
+    public void setCorrect(Boolean correct) {
+        this.correct = correct;
     }
 }

@@ -11,9 +11,9 @@ public class PollQuestion {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private String text;
+    private String question;
     private Boolean multipleChoice;
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<PollQuestionAnswer> questionAnswers;
     @JsonIgnore
     @ManyToOne
@@ -27,12 +27,12 @@ public class PollQuestion {
         this.id = id;
     }
 
-    public String getText() {
-        return text;
+    public String getQuestion() {
+        return question;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setQuestion(String question) {
+        this.question = question;
     }
 
     public Boolean getMultipleChoice() {

@@ -2,6 +2,9 @@ package com.eucolus.poll.controllers.api;
 
 import com.eucolus.poll.entities.Poll;
 import com.eucolus.poll.entities.PollQuestion;
+import com.eucolus.poll.entities.PollQuestionAnswer;
+import com.eucolus.poll.repositories.PollQuestionAnswerRepository;
+import com.eucolus.poll.repositories.PollQuestionRepository;
 import com.eucolus.poll.repositories.PollRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -11,6 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -18,6 +23,10 @@ import java.util.Map;
 public class PollApiController {
     @Autowired
     private PollRepository pollRepository;
+    @Autowired
+    private PollQuestionRepository questionRepository;
+    @Autowired
+    private PollQuestionAnswerRepository answerRepository;
 
     @PostMapping("/{pollId}/title")
     public @ResponseBody
@@ -46,7 +55,31 @@ public class PollApiController {
     @PostMapping(value="/{pollId}", consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody
     HttpStatus setPoll(@PathVariable(value="pollId") Integer pollId, @RequestBody Poll poll) {
+        poll.setModificationDate(new Timestamp(System.currentTimeMillis()));
         pollRepository.save(poll);
+        List<PollQuestion> previousQuestionList = questionRepository.find(pollId);
+        List<PollQuestion> currentQuestionList = poll.getQuestions();
+
+        for(int i = 0; i < currentQuestionList.size(); i++) {
+            PollQuestion question = currentQuestionList.get(i);
+            for(int j = 0; j < previousQuestionList.size(); j++) {
+                PollQuestion previousQuestion = previousQuestionList.get(j);
+                if(previousQuestion.getId().equals(question.getId())) {
+                    previousQuestionList.remove(j);
+                    break;
+                }
+            }
+
+            question.setPoll(poll);
+            questionRepository.save(question);
+            List<PollQuestionAnswer> questionAnswers = question.getQuestionAnswers();
+            for(int j = 0; j < questionAnswers.size(); j++) {
+                PollQuestionAnswer answer = questionAnswers.get(j);
+                answer.setQuestion(question);
+                answerRepository.save(answer);
+            }
+        }
+        questionRepository.delete(previousQuestionList);
         return HttpStatus.OK;
     }
 }
