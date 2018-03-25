@@ -43,6 +43,8 @@ $(document).ready(function () {
     var add_button = document.getElementById("add-question-button");
     add_button.onclick = openAddModal;
 
+    $("#save-poll-button").click(savePoll);
+
     $(document).keyup(function (event) {
         if ($("#poll_title_input").is(":focus") && event.key === "Enter") {
             finishEditTitle()
@@ -87,8 +89,6 @@ var resetModal = function () {
     $('#modal-close-button').prop('onclick',null).off('click');
     $("#answers-wrapper").html("");
     answerCount = 0;
-    //addAnswer();
-    //addAnswer();
 };
 
 var createQuestion = function () {
@@ -146,9 +146,6 @@ var openAddModal = function () {
 };
 
 var openEditModal = function(event) {
-    /*$("#question").val("");
-    var answers_wrapper = $("#answers-wrapper");
-    answers_wrapper.html("");*/
 
     resetModal();
 
@@ -188,7 +185,7 @@ var openEditModal = function(event) {
 };
 
 var editQuestion = function() {
-    // kustuta eelmine ja createQuestion
+
     var id = currentlyEditingQuestionId;
     var previousData;
 
@@ -254,3 +251,6 @@ function cancelEditTitle() {
     $("#title_div").show();
 }
 
+var savePoll = function () {
+  // save questions to database
+};

@@ -51,6 +51,16 @@
                         <i class="material-icons green-text add-question-icon">add_circle</i>
                     </a>
                 </p>
+
+                <div class="row" id="finish-buttons-row">
+                    <div class="col s4 m3 offset-s1 offset-m2">
+                        <a href="#" th:text="#{done}" class="btn green" id="save-poll-button"></a>
+                    </div>
+                    <div class="col s4 m3 offset-s2 offset-m2">
+                        <a href="/polls" th:text="#{cancel}" class="btn red"></a>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

@@ -16,6 +16,10 @@
     font-size: 4em;
 }
 
+#finish-buttons-row a {
+    width: 100%;
+}
+
 /* question edit overlay */
 
 #question-edit-modal-content {
