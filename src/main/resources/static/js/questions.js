@@ -36,8 +36,19 @@ $(document).ready(function () {
     });
 
     getQuestions();
-
     resetModal();
+
+    $("#correct-text").html($("#correct-text").html() + $("#correct-help-wrap").html());
+    $("#answer-text").html($("#answer-text").html() + $("#answer-help-wrap").html());
+
+    $("#correct-help-link").attr("data-tooltip", $("#correct-help-text").html());
+    console.log($("#correct-help-text").html());
+    console.log($("#correct-help-text").text());
+    console.log($("#correct-help-link").attr("data-tooltip"));
+    $("#answer-help-link").attr("data-tooltip", $("#answer-help-text").html());
+    $("#delete-help-link").attr("data-tooltip", $("#delete-help-text").html());
+
+    $(".tooltipped").tooltip();
 });
 
 function getQuestions() {

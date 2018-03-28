@@ -14,12 +14,21 @@
             </div>
 
             <div class="row" id="edit-question-hint">
-                <div class="input-field col s1">
-                    <h6 class="center-align" th:text="#{correct}">Correct?</h6>
+                <div class="input-field col s2">
+                    <h6 class="center-align" id="correct-text" th:text="#{correct}">Correct?</h6>
                 </div>
 
-                <div class="input-field col s10">
-                    <h6 class="center-align" th:text="#{answer}">Answer</h6>
+                <div class="input-field col s8">
+                    <h6 class="center-align" id="answer-text" th:text="#{answer}">Answer</h6>
+                </div>
+
+                <div class="input-field col s2">
+                    <h6 class="right-align">
+                        <a href="#" id="delete-help-link" class="tooltipped" data-position="right">
+                            <i class="material-icons help-icon" id="delete-help-icon">info_outline</i>
+                        </a>
+                        <span class="hide" id="delete-help-text" th:text="#{delete-help}"></span>
+                    </h6>
                 </div>
 
             </div>
