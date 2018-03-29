@@ -7,3 +7,23 @@ body {
 main {
     flex: 1 0 auto;
 }
+
+#cookies-bar {
+    width: 100%;
+    position: fixed;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    display: none;
+}
+
+#cookies-text {
+    font-size: 1.3em;
+    color: #FFFFFF;
+}
+
+#cookies-button {
+    margin-left: 0.5em;
+}
