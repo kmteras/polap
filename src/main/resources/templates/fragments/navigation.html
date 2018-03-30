@@ -20,6 +20,7 @@
             </ul>
         </div>
     </nav>
+
     <ul id="language_dropdown" class="dropdown-content">
         <li><a href="?lang=en" rel="alternate" hreflang="en" th:text="#{en_choice}"></a></li>
         <li><a href="?lang=et" rel="alternate" hreflang="et" th:text="#{et_choice}"></a></li>
@@ -32,5 +33,11 @@
         <li class="divider" tabindex="-1"></li>
         <li><a href="/logout" th:text="#{logout}"></a></li>
     </ul>
+
+    <div id="cookies-bar" class="blue center-align darken-3">
+        <span id="cookies-text" th:text="#{cookies}"></span>
+        <a href="#" id="cookies-button" class="btn-small">OK</a>
+    </div>
+
 </header>
 </html>

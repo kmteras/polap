@@ -42,6 +42,14 @@
     margin-bottom: 0;
 }
 
+.help-icon {
+    font-size: 1.3rem;
+}
+
+#delete-help-icon {
+    padding-right: 0.3em;
+}
+
 .edit-question-input-col {
     margin-top: 0;
     margin-bottom: 0;
