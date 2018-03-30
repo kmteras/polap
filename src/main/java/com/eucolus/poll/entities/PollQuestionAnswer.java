@@ -28,7 +28,7 @@ public class PollQuestionAnswer {
         return answer;
     }
 
-    public void setAnswer(String text) {
+    public void setAnswer(String answer) {
         this.answer = answer;
     }
 

@@ -70,16 +70,18 @@ function buildQuestions() {
 
 var questionCount = 0;
 var answerCount = 0;
+var answerTotalCount = 0;
 
 function addAnswer() {
     var $template = $("#question-edit-answer-template").clone();
 
-    $template.attr("id", "answer_row_" + answerCount);
-    $template.find(".remove-button").attr("answer_id", answerCount);
+    $template.attr("id", "answer_row_" + answerTotalCount);
+    $template.find(".remove-button").attr("answer_id", answerTotalCount);
     $template.find(".remove-button").on('click', removeAnswer);
 
     $("#answers-wrapper").append($template);
     answerCount++;
+    answerTotalCount++;
     if(answerCount >= 4) {
         $("#add_answer_button").hide();
     }
@@ -100,6 +102,7 @@ function resetModal() {
     $('#modal-close-button').prop('onclick', null).off('click');
     $("#answers-wrapper").html("");
     answerCount = 0;
+    answerTotalCount = 0;
 }
 
 function createQuestion() {
@@ -184,7 +187,6 @@ function openEditModal(event) {
     $("#question").val(questionData.question);
 
     for (var j = 0; j < questionData["questionAnswers"].length; j++) {
-
         var correct = questionData["questionAnswers"][j].correct;
         var answer = questionData["questionAnswers"][j].answer;
 
