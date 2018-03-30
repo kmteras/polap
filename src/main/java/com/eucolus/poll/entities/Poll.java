@@ -13,7 +13,7 @@ public class Poll {
     private String title;
     private Timestamp creationDate;
     private Timestamp modificationDate;
-    @OneToMany(mappedBy = "poll")
+    @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL)
     private List<PollQuestion> questions;
 
     public Integer getId() {

@@ -103,6 +103,7 @@ function createQuestion() {
     $("#answers-wrapper").children().each(function () {
         var correct = $(this).find('input[type="checkbox"]').first().prop("checked");
         var answer = $(this).find('input[type="text"]').first().val();
+        console.log(answer);
         questionData.questionAnswers.push({
             "answer": answer,
             "correct": correct
@@ -147,8 +148,6 @@ function removeQuestion(event) {
 
 function openAddModal() {
     resetModal();
-    addAnswer();
-    addAnswer();
     $("#modal-close-button").click(createQuestion);
     $('#edit-modal').modal('open');
 }
@@ -178,6 +177,8 @@ function openEditModal(event) {
         var correct = questionData["questionAnswers"][j].correct;
         var answer = questionData["questionAnswers"][j].answer;
 
+        console.log(questionData["questionAnswers"][j]);
+
         addAnswer();
         // answerCount has been reset, every addQuestion adds
         // a question with id-s starting from 0 again
@@ -197,7 +198,7 @@ function editQuestion() {
     for (var i = 0; i < poll["questions"].length; i++) {
         if (poll["questions"][i].htmlId === id) {
             previousData = poll["questions"][i];
-            poll["questions"].splice(id, 1);
+            poll["questions"].splice(i, 1);
             break;
         }
     }
@@ -246,7 +247,7 @@ function savePoll() {
             },
             type: "POST",
             success: function (msg) {
-                window.location.replace("/polls");
+                //window.location.replace("/polls");
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log(XMLHttpRequest);
