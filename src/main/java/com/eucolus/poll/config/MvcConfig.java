@@ -34,10 +34,4 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
     }
-
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/static/css/**").addResourceLocations("/resources/").setCachePeriod(604800);
-        registry.addResourceHandler("/static/js/**").addResourceLocations("/resources/").setCachePeriod(604800);
-    }
 }

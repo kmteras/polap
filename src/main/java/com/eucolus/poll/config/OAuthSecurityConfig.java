@@ -25,6 +25,9 @@ public class OAuthSecurityConfig extends WebSecurityConfigurerAdapter {
     private ResourceServerProperties resourceServerProperties;
 
     @Autowired
+    LoginHandler loginHandler;
+
+    @Autowired
     public void setOauth2ClientContext(OAuth2ClientContext oauth2ClientContext) {
         this.oauth2ClientContext = oauth2ClientContext;
     }
@@ -84,7 +87,8 @@ public class OAuthSecurityConfig extends WebSecurityConfigurerAdapter {
     private OAuth2ClientAuthenticationProcessingFilter filter() {
         //Creating the filter for "/google/login" url
         OAuth2ClientAuthenticationProcessingFilter oAuth2Filter = new OAuth2ClientAuthenticationProcessingFilter(
-                "/google/login");
+                "/login/google");
+        oAuth2Filter.setAuthenticationSuccessHandler(loginHandler);
 
         //Creating the rest template for getting connected with OAuth service.
         //The configuration parameters will inject while creating the bean.
