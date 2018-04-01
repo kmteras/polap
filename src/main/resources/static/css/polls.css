@@ -1,0 +1,17 @@
+/* poll management page */
+
+#poll-row {
+    margin-top: 2.8em;
+}
+
+.question-text {
+    font-size: 1.6em;
+}
+
+.question-list-icon {
+    font-size: 2em;
+}
+
+.add-question-icon {
+    font-size: 4em;
+}
