@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.zip.DeflaterOutputStream;
 
-public interface RequestLocationRepository extends CrudRepository<RequestLocation, Long> {
+public interface RequestLocationRepository extends CrudRepository<RequestLocation, Integer> {
     @Query(value = "SELECT * FROM request_locations WHERE ip=(:ip)", nativeQuery = true)
     RequestLocation find(@Param("ip") String ip);
 

@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:remove="tag">
-<div id="questions-question-template">
+<ul id="questions-question-template">
     <li class="collection-item">
         <div>
-            <span class="question-text">{question}</span>
+            <span class="question-text"></span>
             <span class="secondary-content">
-                <a href="#!">
-                    <i class="material-icons question-list-icon">edit</i>
+                <a href="#">
+                    <i class="material-icons question-list-icon edit-button">edit</i>
                 </a>
-                <a href="#!">
-                    <i class="material-icons question-list-icon red-text text-darken-3">delete</i>
+                <a href="#">
+                    <i class="material-icons question-list-icon red-text text-darken-3 remove-button">delete</i>
                 </a>
             </span>
         </div>
     </li>
-</div>
+</ul>
 </html>

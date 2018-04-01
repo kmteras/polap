@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface RequestOSRepository extends CrudRepository<RequestOS, Long> {
+public interface RequestOSRepository extends CrudRepository<RequestOS, Integer> {
     @Query(value = "SELECT * FROM request_oss", nativeQuery = true)
     List<RequestOS> findAll();
 

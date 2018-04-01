@@ -15,6 +15,7 @@ import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticat
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configurable
 @EnableWebSecurity
@@ -22,6 +23,9 @@ public class OAuthSecurityConfig extends WebSecurityConfigurerAdapter {
     private OAuth2ClientContext oauth2ClientContext;
     private AuthorizationCodeResourceDetails authorizationCodeResourceDetails;
     private ResourceServerProperties resourceServerProperties;
+
+    @Autowired
+    LoginHandler loginHandler;
 
     @Autowired
     public void setOauth2ClientContext(OAuth2ClientContext oauth2ClientContext) {
@@ -68,7 +72,7 @@ public class OAuthSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().fullyAuthenticated()
                 .and()
                 // Setting the logout URL "/logout" - default logout URL.
-                .logout()
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 // After successful logout the application will redirect to "/" path.
                 .logoutSuccessUrl("/")
                 .permitAll()
@@ -83,7 +87,8 @@ public class OAuthSecurityConfig extends WebSecurityConfigurerAdapter {
     private OAuth2ClientAuthenticationProcessingFilter filter() {
         //Creating the filter for "/google/login" url
         OAuth2ClientAuthenticationProcessingFilter oAuth2Filter = new OAuth2ClientAuthenticationProcessingFilter(
-                "/google/login");
+                "/login/google");
+        oAuth2Filter.setAuthenticationSuccessHandler(loginHandler);
 
         //Creating the rest template for getting connected with OAuth service.
         //The configuration parameters will inject while creating the bean.

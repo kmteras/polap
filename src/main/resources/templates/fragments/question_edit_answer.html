@@ -2,28 +2,24 @@
 <html xmlns:th="http://www.thymeleaf.org" th:remove="tag">
 <div id="question-edit-answer-template">
     <div class="row">
-
-        <div class="input-field col s3 edit-question-input-col">
-            <form action="#">
-                    <div class="switch">
-                        <label>
-                            <input type="checkbox"/>
-                            <span class="lever"></span>
-                        </label>
-                    </div>
-            </form>
+        <div class="input-field col s2 edit-question-input-col">
+            <div class="center-align">
+                <label>
+                    <input type="checkbox" class="filled-in"/>
+                    <span class="answer-checkbox-span"></span>
+                </label>
+            </div>
         </div>
 
-        <div class="input-field col s7 edit-question-input-col">
+        <div class="input-field col s8 edit-question-input-col">
             <input type="text"/>
         </div>
 
         <div class="col s2 edit-question-input-col">
-            <a href="#!" class="secondary-content">
-                <i class="material-icons edit-question-list-icon red-text text-darken-3">delete</i>
+            <a href="#" class="secondary-content">
+                <i class="remove-button material-icons edit-question-list-icon red-text text-darken-3">delete</i>
             </a>
         </div>
-
     </div>
 </div>
 </html>

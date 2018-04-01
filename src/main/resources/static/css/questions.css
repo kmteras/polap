@@ -13,7 +13,11 @@
 }
 
 .add-question-icon {
-    font-size: 5.6em;
+    font-size: 4em;
+}
+
+#finish-buttons-row a {
+    width: 100%;
 }
 
 /* question edit overlay */
@@ -38,6 +42,14 @@
     margin-bottom: 0;
 }
 
+.help-icon {
+    font-size: 1.3rem;
+}
+
+#delete-help-icon {
+    padding-right: 0.3em;
+}
+
 .edit-question-input-col {
     margin-top: 0;
     margin-bottom: 0;
@@ -55,4 +67,16 @@
 #modal-close-button-wrap {
     margin-top: 0;
     margin-bottom: 0;
+}
+
+.answer-checkbox-span {
+    height: 0 !important;
+}
+
+.icon-h3 {
+    display: inline;
+}
+
+#title_edit_div {
+    display: none;
 }

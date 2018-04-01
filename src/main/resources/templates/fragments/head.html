@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" th:remove="tag">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
 <meta name="application-name" content="Polap"/>
@@ -13,11 +13,20 @@
 <meta property="isAccessibleForFree" datatype="xsd:boolean" content="true"/>
 <meta property="isFamilyFriendly" datatype="xsd:boolean" content="true"/>
 
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 
 <link rel="stylesheet" type="text/css" href="/css/materialize.min.css"/>
 <link rel="stylesheet" type="text/css" href="/css/app.css"/>
 
-<script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
-<script src="/webjars/materialize/1.0.0-alpha.2/dist/js/materialize.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    /*<![CDATA[*/
+    window.jQuery || document.write("<script src='/webjars/jquery/3.3.1-1/jquery.min.js'><\/script>");
+    /*]]>*/
+</script>
+<script src="/js/materialize.min.js"></script>
+<script src="/js/app.js"></script>
 </html>
