@@ -260,7 +260,7 @@ function savePoll() {
             },
             type: "POST",
             success: function (msg) {
-                //window.location.replace("/polls");
+                window.location.replace("/polls");
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log(XMLHttpRequest);
