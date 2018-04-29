@@ -8,6 +8,11 @@ public class SitemapController {
 
     @GetMapping("/sitemap")
     public String sitemap() {
+        if(user != null)
+            model.addAttribute("user", user.getName());
+        else
+            model.addAttribute("user", null);
+        
         return "sitemap";
     }
 }
