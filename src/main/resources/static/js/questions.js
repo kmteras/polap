@@ -10,6 +10,7 @@ $(document).ready(function () {
     token = $('#_csrf').attr('content');
     header = $('#_csrf_header').attr('content');
     url = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
+
     $('#edit-modal').modal({
         dismissible: true, // Modal can be dismissed by clicking outside
         opacity: .5, // Opacity of modal background
@@ -31,7 +32,7 @@ $(document).ready(function () {
 
     $(document).keyup(function (event) {
         if ($("#poll_title_input").is(":focus") && event.key === "Enter") {
-            finishEditTitle()
+            finishEditTitle();
         }
     });
 
@@ -41,14 +42,13 @@ $(document).ready(function () {
     $("#correct-text").html($("#correct-text").html() + $("#correct-help-wrap").html());
     $("#answer-text").html($("#answer-text").html() + $("#answer-help-wrap").html());
 
-    $("#correct-help-link").attr("data-tooltip", $("#correct-help-text").html());
-    console.log($("#correct-help-text").html());
-    console.log($("#correct-help-text").text());
-    console.log($("#correct-help-link").attr("data-tooltip"));
-    $("#answer-help-link").attr("data-tooltip", $("#answer-help-text").html());
+    $(".correct-help-link").first().attr("data-tooltip", $("#correct-help-text").html());
+    $(".answer-help-link").first().attr("data-tooltip", $("#answer-help-text").html());
     $("#delete-help-link").attr("data-tooltip", $("#delete-help-text").html());
 
     $(".tooltipped").tooltip();
+
+    $("#fileinput").change(onFileUpload);
 });
 
 function getQuestions() {
@@ -129,7 +129,7 @@ function createQuestion() {
 }
 
 function addQuestion(questionData) {
-    var $template = $("#questions-question-template > li").first().clone();
+    var $template = $("#questions-question-template").find("li").first().clone();
 
     if(questionData.htmlId === undefined) {
         questionData.htmlId = questionCount;
@@ -267,4 +267,14 @@ function savePoll() {
             }
         }
     );
+}
+
+function onFileUpload() {
+    var file = this.files[0];
+    console.log(file);
+    if (file.type === "text/plain" || file.type === "application/json") {
+        //process file contents
+    }
+
+    // text.replace("<", "&lt").replace(">", "&gt")
 }
