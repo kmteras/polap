@@ -13,6 +13,11 @@ public class StatisticsController {
 
     @RequestMapping("/statistics")
     public String statistics(Model model) {
+        if(user != null)
+            model.addAttribute("user", user.getName());
+        else
+            model.addAttribute("user", null);
+        
         model.addAttribute("requests_count", requestRepository.findAllCount());
         model.addAttribute("dateCount", requestRepository.getDateHist());
         return "statistics";
