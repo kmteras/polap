@@ -4,6 +4,7 @@ var token;
 var header;
 var url;
 var currentlyEditingQuestionId = null;
+var locale;
 
 $(document).ready(function () {
     pollId = $("#poll_id").attr("content");
@@ -48,12 +49,13 @@ $(document).ready(function () {
 
     $(".tooltipped").tooltip();
 
+    locale = $("html").attr("lang");
+
     if (window.File && window.FileReader && window.FileList && window.Blob) {
         $("#fileinput").change(readFile);
     }
     else {
-        var lang = $("html").attr("lang");
-        if (lang === "et") {
+        if (locale === "et") {
             alert('File APId ei ole selles brauseris toetatud.');
         }
         else {
@@ -65,7 +67,7 @@ $(document).ready(function () {
 function getQuestions() {
     $.getJSON(url + "/api/polls/" + pollId, function (data) {
         poll = data;
-        //console.log(data);
+        console.log(data);
         buildQuestions();
     })
 }
@@ -283,21 +285,40 @@ function savePoll() {
 function readFile() {
     var file = this.files[0];
     if (file.type !== "text/plain" && file.type !== "application/json") {
+        if (locale === "et") {
+            alert("Fail on ebasobivas formaadis, soovitatud on .json!");
+        }
+        else {
+            alert("File is not in sa supported format, we recommend .json!");
+        }
         return;
     }
 
     var reader = new FileReader();
-    reader.onload = processFileText;
+    reader.onload = addQuestionsFromText;
     reader.readAsText(file);
 }
 
-function processFileText(e) {
+function addQuestionsFromText(e) {
     var text = e.target.result;
     text = text.replace(new RegExp("<", "g"), "&lt")
         .replace(new RegExp(">", "g"), "&gt");
-    var data = JSON.parse(text);
 
-    // clear #questions-wrapper from children
-    // add questions to poll["questions"]
-    // call buildQuestions()
+    try {
+        var data = JSON.parse(text)["questions"];
+    } catch (error) {
+        if (locale === "et") {
+            alert("Viga JSON parsimisel: " + error.message);
+        }
+        else {
+            alert("Error parsing JSON: " + error.message);
+        }
+        return;
+    }
+
+    for (var i = 0; i < data.length; i++) {
+        poll["questions"].push(data[i]);
+    }
+
+    buildQuestions();
 }
