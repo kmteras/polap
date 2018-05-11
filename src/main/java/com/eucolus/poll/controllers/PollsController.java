@@ -19,24 +19,12 @@ public class PollsController {
 
     @GetMapping("/polls")
     public String polls(Model model, Principal user) {
-        if(user != null)
-            model.addAttribute("user", user.getName());
-        else {
-            model.addAttribute("user", null);
-            return "login";
-        }
-
         model.addAttribute("polls", pollRepository.findAll());
         return "polls";
     }
 
     @GetMapping("/create_poll")
     public String poll(Model model, Principal user) {
-        if(user != null)
-            model.addAttribute("user", user.getName());
-        else
-            model.addAttribute("user", null);
-
         Poll newPoll = new Poll();
         newPoll.setTitle("Title");
         newPoll.setCreationDate(new Timestamp(System.currentTimeMillis()));
@@ -48,11 +36,6 @@ public class PollsController {
 
     @GetMapping("/polls/{pollId}")
     public String poll(@PathVariable(value="pollId") Integer pollId, Model model, Principal user) {
-        if(user != null)
-            model.addAttribute("user", user.getName());
-        else
-            model.addAttribute("user", null);
-
         model.addAttribute("poll", pollRepository.findOne(pollId));
         return "questions";
     }

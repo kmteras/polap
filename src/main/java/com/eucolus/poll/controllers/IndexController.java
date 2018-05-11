@@ -12,10 +12,6 @@ public class IndexController {
 
     @RequestMapping("/")
     public String index(Model model, Principal user) {
-        if(user != null)
-            model.addAttribute("user", user.getName());
-        else
-            model.addAttribute("user", null);
         return "index";
     }
 }

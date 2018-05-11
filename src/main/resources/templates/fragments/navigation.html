@@ -14,7 +14,7 @@
                 </a></li>
 
                 <li>
-                    <a th:if="${user}" id="user_dropdown_button" class="dropdown-trigger" href="#" data-target="user_dropdown" th:text="${user}"></a>
+                    <a th:if="${user}" id="user_dropdown_button" class="dropdown-trigger" href="#" data-target="user_dropdown" th:text="${user.getName()}"></a>
                     <a th:unless="${user}" href="/login" th:text="#{login}"></a>
                 </li>
             </ul>

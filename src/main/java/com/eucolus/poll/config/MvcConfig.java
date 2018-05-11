@@ -30,8 +30,14 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         return lci;
     }
 
+    @Bean
+    public ModelAndViewUserInterceptor modelAndViewUserInterceptor() {
+        return new ModelAndViewUserInterceptor();
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
+        registry.addInterceptor(modelAndViewUserInterceptor());
     }
 }
