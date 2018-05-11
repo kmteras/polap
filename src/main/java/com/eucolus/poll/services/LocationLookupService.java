@@ -1,4 +1,4 @@
-package com.eucolus.poll;
+package com.eucolus.poll.services;
 
 import com.eucolus.poll.repositories.RequestLocationRepository;
 import org.json.JSONException;

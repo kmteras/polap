@@ -1,4 +1,4 @@
-package com.eucolus.poll;
+package com.eucolus.poll.config;
 
 import com.eucolus.poll.entities.Request;
 import com.eucolus.poll.entities.RequestBrowser;
@@ -8,6 +8,7 @@ import com.eucolus.poll.repositories.RequestBrowserRepository;
 import com.eucolus.poll.repositories.RequestLocationRepository;
 import com.eucolus.poll.repositories.RequestOSRepository;
 import com.eucolus.poll.repositories.RequestRepository;
+import com.eucolus.poll.services.LocationLookupService;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
