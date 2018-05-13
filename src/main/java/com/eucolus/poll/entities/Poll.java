@@ -15,6 +15,8 @@ public class Poll {
     private Timestamp modificationDate;
     @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL)
     private List<PollQuestion> questions;
+    @ManyToOne
+    private PollUser creatorUser;
 
     public Integer getId() {
         return id;
@@ -54,5 +56,13 @@ public class Poll {
 
     public void setQuestions(List<PollQuestion> questions) {
         this.questions = questions;
+    }
+
+    public PollUser getCreatorUser() {
+        return creatorUser;
+    }
+
+    public void setCreatorUser(PollUser creatorUser) {
+        this.creatorUser = creatorUser;
     }
 }

@@ -1,6 +1,7 @@
 package com.eucolus.poll.entities;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
@@ -12,6 +13,9 @@ public class PollUser {
     private String firstName;
     private String lastName;
     private String googleUid;
+
+    @OneToMany(mappedBy = "creatorUser", cascade = CascadeType.PERSIST)
+    private List<Poll> polls;
 
     public Integer getId() {
         return id;
