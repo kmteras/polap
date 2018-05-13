@@ -321,4 +321,11 @@ function addQuestionsFromText(e) {
     }
 
     buildQuestions();
+
+    if (locale === "et") {
+        alert("Küsimuste sisselugemine õnnestus!");
+    }
+    else {
+        alert("Reading in questions successful!");
+    }
 }
