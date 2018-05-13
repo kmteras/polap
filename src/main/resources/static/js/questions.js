@@ -4,12 +4,14 @@ var token;
 var header;
 var url;
 var currentlyEditingQuestionId = null;
+var locale;
 
 $(document).ready(function () {
     pollId = $("#poll_id").attr("content");
     token = $('#_csrf').attr('content');
     header = $('#_csrf_header').attr('content');
     url = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
+
     $('#edit-modal').modal({
         dismissible: true, // Modal can be dismissed by clicking outside
         opacity: .5, // Opacity of modal background
@@ -31,7 +33,7 @@ $(document).ready(function () {
 
     $(document).keyup(function (event) {
         if ($("#poll_title_input").is(":focus") && event.key === "Enter") {
-            finishEditTitle()
+            finishEditTitle();
         }
     });
 
@@ -41,18 +43,29 @@ $(document).ready(function () {
     $("#correct-text").html($("#correct-text").html() + $("#correct-help-wrap").html());
     $("#answer-text").html($("#answer-text").html() + $("#answer-help-wrap").html());
 
-    $("#correct-help-link").attr("data-tooltip", $("#correct-help-text").html());
-    console.log($("#correct-help-text").html());
-    console.log($("#correct-help-text").text());
-    console.log($("#correct-help-link").attr("data-tooltip"));
-    $("#answer-help-link").attr("data-tooltip", $("#answer-help-text").html());
+    $(".correct-help-link").first().attr("data-tooltip", $("#correct-help-text").html());
+    $(".answer-help-link").first().attr("data-tooltip", $("#answer-help-text").html());
     $("#delete-help-link").attr("data-tooltip", $("#delete-help-text").html());
 
     $(".tooltipped").tooltip();
+
+    locale = $("html").attr("lang");
+
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+        $("#fileinput").change(readFile);
+    }
+    else {
+        if (locale === "et") {
+            alert('File APId ei ole selles brauseris toetatud.');
+        }
+        else {
+            alert('The File APIs are not fully supported in this browser.');
+        }
+    }
 });
 
 function getQuestions() {
-    $.getJSON(url + "/api/polls/" + pollId, function(data) {
+    $.getJSON(url + "/api/polls/" + pollId, function (data) {
         poll = data;
         console.log(data);
         buildQuestions();
@@ -82,7 +95,7 @@ function addAnswer() {
     $("#answers-wrapper").append($template);
     answerCount++;
     answerTotalCount++;
-    if(answerCount >= 4) {
+    if (answerCount >= 4) {
         $("#add_answer_button").hide();
     }
 }
@@ -91,7 +104,7 @@ function removeAnswer(event) {
     var $target = $(event.target);
     var id = $target.attr("answer_id");
     $("#answer_row_" + id).remove();
-    if(answerCount < 4) {
+    if (answerCount < 4) {
         $("#add_answer_button").hide();
     }
     answerCount--;
@@ -117,7 +130,7 @@ function createQuestion() {
     $("#answers-wrapper").children().each(function () {
         var correct = $(this).find('input[type="checkbox"]').first().prop("checked");
         var answer = $(this).find('input[type="text"]').first().val();
-        console.log(answer);
+        //console.log(answer);
         questionData.questionAnswers.push({
             "answer": answer,
             "correct": correct
@@ -129,9 +142,9 @@ function createQuestion() {
 }
 
 function addQuestion(questionData) {
-    var $template = $("#questions-question-template > li").first().clone();
+    var $template = $("#questions-question-template").find("li").first().clone();
 
-    if(questionData.htmlId === undefined) {
+    if (questionData.htmlId === undefined) {
         questionData.htmlId = questionCount;
     }
 
@@ -190,7 +203,7 @@ function openEditModal(event) {
         var correct = questionData["questionAnswers"][j].correct;
         var answer = questionData["questionAnswers"][j].answer;
 
-        console.log(questionData["questionAnswers"][j]);
+        //console.log(questionData["questionAnswers"][j]);
 
         addAnswer();
         // answerCount has been reset, every addQuestion adds
@@ -247,7 +260,7 @@ function cancelEditTitle() {
 }
 
 function savePoll() {
-    console.log(poll);
+    //console.log(poll);
 
     $.ajax({
             url: url + "/api/polls/" + pollId,
@@ -267,4 +280,52 @@ function savePoll() {
             }
         }
     );
+}
+
+function readFile() {
+    var file = this.files[0];
+    if (file.type !== "text/plain" && file.type !== "application/json") {
+        if (locale === "et") {
+            alert("Fail on ebasobivas formaadis, soovitatud on .json!");
+        }
+        else {
+            alert("File is not in sa supported format, we recommend .json!");
+        }
+        return;
+    }
+
+    var reader = new FileReader();
+    reader.onload = addQuestionsFromText;
+    reader.readAsText(file);
+}
+
+function addQuestionsFromText(e) {
+    var text = e.target.result;
+    text = text.replace(new RegExp("<", "g"), "&lt")
+        .replace(new RegExp(">", "g"), "&gt");
+
+    try {
+        var data = JSON.parse(text)["questions"];
+    } catch (error) {
+        if (locale === "et") {
+            alert("Viga JSON parsimisel: " + error.message);
+        }
+        else {
+            alert("Error parsing JSON: " + error.message);
+        }
+        return;
+    }
+
+    for (var i = 0; i < data.length; i++) {
+        poll["questions"].push(data[i]);
+    }
+
+    buildQuestions();
+
+    if (locale === "et") {
+        alert("Küsimuste sisselugemine õnnestus!");
+    }
+    else {
+        alert("Reading in questions successful!");
+    }
 }

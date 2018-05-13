@@ -1,0 +1,25 @@
+{"questions": [
+	{"question": "Esimene (2)(1)",
+	"questionAnswers": [
+	
+		{"answer": "üks",
+		"correct": true},
+		
+		{"answer": "kaks",
+		"correct": false}
+	]},
+		
+	{"question": "Teine (3)(1,3)",
+	"questionAnswers": [
+	
+		{"answer": "one",
+		"correct": true},
+		
+		{"answer": "<script>console.log(\"HACKED!\");</script>",
+		"correct": false},
+		
+		{"answer": "three",
+		"correct": true}
+	]}
+]
+}

@@ -9,6 +9,14 @@
 
     <th:block layout:include="fragments/head"/>
 
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
+          integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
+            integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
+            crossorigin=""></script>
+
     <link rel="stylesheet" type="text/css" href="/css/statistics.css"/>
 
     <script src="/webjars/d3/5.0.0-rc.3/dist/d3.min.js"></script>
@@ -18,28 +26,33 @@
 </head>
 <body>
 <th:block layout:replace="fragments/navigation"/>
-<div class="container">
-    <h1 th:text="#{statistics_requests} + ': ' + ${requests_count}"></h1>
-    <div class="row">
-        <div class="col s12 m6">
-            <div class="card">
-                <div class="card-content">
-                    <span class="card-title" th:text="#{statistics_visitor_browsers}"></span>
-                    <div class="pi_chart" id="chart0"></div>
-                </div>
+<main>
+    <div class="container">
+        <h1 th:text="#{statistics_requests} + ': ' + ${requests_count}"></h1>
+        <div class="row">
+            <div class="col m12 l6">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title" th:text="#{statistics_visitor_browsers}"></span>
+                        <div class="pi_chart" id="chart0"></div>
+                    </div>
 
+                </div>
             </div>
-        </div>
-        <div class="col s12 m6">
-            <div class="card">
-                <div class="card-content">
-                    <span class="card-title" th:text="#{statistics_visitor_oss}"></span>
-                    <div class="pi_chart" id="chart1"></div>
+            <div class="col m12 l6">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title" th:text="#{statistics_visitor_oss}"></span>
+                        <div class="pi_chart" id="chart1"></div>
+                    </div>
                 </div>
             </div>
         </div>
+        <h3 th:text="#{maptitle}"></h3>
+        <!-- Leaflet map -->
+        <div id="mapid"></div>
     </div>
-</div>
+</main>
 <th:block layout:replace="fragments/footer"/>
 </body>
 </html>

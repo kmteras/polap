@@ -23,8 +23,8 @@ public interface RequestRepository extends CrudRepository<Request, Integer> {
 
     @Query(value = "SELECT name, COUNT(name) FROM only_main_requests JOIN request_browsers " +
             "WHERE request_browsers.id = only_main_requests.browser_id GROUP BY name", nativeQuery = true)
-    List<Object> getBrowserRequestsCount();
+    List<Object[]> getBrowserRequestsCount();
 
-    @Query(value = "SELECT CONCAT(os_name, ' ', os_group), COUNT(os_name) FROM only_main_requests JOIN request_oss WHERE request_oss.id = only_main_requests.os_id GROUP BY os_name, os_group;", nativeQuery = true)
+    @Query(value = "SELECT os_group, COUNT(os_name) FROM only_main_requests JOIN request_oss WHERE request_oss.id = only_main_requests.os_id GROUP BY os_name, os_group;", nativeQuery = true)
     List<Object> getOSRequestsCount();
 }
