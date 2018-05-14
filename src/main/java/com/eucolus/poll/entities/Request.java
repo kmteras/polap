@@ -18,6 +18,8 @@ public class Request {
     @ManyToOne
     private RequestBrowser browser;
     private Timestamp dateTime;
+    @ManyToOne
+    private PollUser user;
 
     public Integer getId() {
         return id;
@@ -73,5 +75,13 @@ public class Request {
 
     public void setLocation(RequestLocation location) {
         this.location = location;
+    }
+
+    public PollUser getUser() {
+        return user;
+    }
+
+    public void setUser(PollUser user) {
+        this.user = user;
     }
 }

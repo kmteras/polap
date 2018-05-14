@@ -1,14 +1,12 @@
 package com.eucolus.poll.config;
 
-import com.eucolus.poll.entities.Request;
-import com.eucolus.poll.entities.RequestBrowser;
-import com.eucolus.poll.entities.RequestLocation;
-import com.eucolus.poll.entities.RequestOS;
+import com.eucolus.poll.entities.*;
 import com.eucolus.poll.repositories.RequestBrowserRepository;
 import com.eucolus.poll.repositories.RequestLocationRepository;
 import com.eucolus.poll.repositories.RequestOSRepository;
 import com.eucolus.poll.repositories.RequestRepository;
 import com.eucolus.poll.services.LocationLookupService;
+import com.eucolus.poll.services.UserService;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
@@ -20,6 +18,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -37,6 +36,9 @@ public class RequestTrackFilter implements Filter {
 
     @Autowired
     LocationLookupService locationLookupService;
+
+    @Autowired
+    UserService userService;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -110,6 +112,12 @@ public class RequestTrackFilter implements Filter {
         trackRequest.setOs(requestOS);
         trackRequest.setBrowser(requestBrowser);
         trackRequest.setLocation(requestLocation);
+
+        Principal principal = ((HttpServletRequest) request).getUserPrincipal();
+        if(principal != null) {
+            PollUser user = userService.getUser(principal);
+            trackRequest.setUser(user);
+        }
 
         requestRepository.save(trackRequest);
     }

@@ -17,6 +17,9 @@ public class PollUser {
     @OneToMany(mappedBy = "creatorUser", cascade = CascadeType.PERSIST)
     private List<Poll> polls;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Request> requests;
+
     public Integer getId() {
         return id;
     }

@@ -15,7 +15,7 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public void updateUserStatus(Principal principal) {
+    public PollUser updateUserStatus(Principal principal) {
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
 
         String uid = (String)details.get("sub");
@@ -38,5 +38,19 @@ public class UserService {
             user.setGoogleUid(uid);
             userRepository.save(user);
         }
+
+        return user;
+    }
+
+    public PollUser getUser(Principal principal) {
+        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+
+        PollUser pollUser = userRepository.findByEmail((String)details.get("email"));
+
+        if(pollUser == null) {
+            return updateUserStatus(principal);
+        }
+
+        return pollUser;
     }
 }
