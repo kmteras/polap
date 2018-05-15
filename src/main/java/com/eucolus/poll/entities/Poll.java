@@ -13,12 +13,17 @@ public class Poll {
     private String title;
     private Timestamp creationDate;
     private Timestamp modificationDate;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "poll", foreignKey = @ForeignKey(name = "fk_questions_poll"))
     private List<PollQuestion> questions;
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "creator_user_id", foreignKey = @ForeignKey(name = "fk_polls_creator_user"))
     private PollUser creatorUser;
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "modifying_user_id", foreignKey = @ForeignKey(name = "fk_polls_modifying_user"))
     private PollUser modifyingUser;
 
     public Integer getId() {

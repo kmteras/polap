@@ -17,10 +17,6 @@ public class RequestOS {
     private String name;
     @Column(name = "os_group")
     private String group;
-    @JsonIgnore
-    @OneToMany
-    @JoinColumn(name = "os", foreignKey = @ForeignKey(name = "fk_requests_os"))
-    private List<Request> requests;
 
     public Integer getId() {
         return id;
@@ -46,11 +42,4 @@ public class RequestOS {
         this.group = group;
     }
 
-    public List<Request> getRequests() {
-        return requests;
-    }
-
-    public void setRequests(List<Request> requests) {
-        this.requests = requests;
-    }
 }

@@ -15,18 +15,20 @@ public class PollQuestionAnswer {
     private String answer;
     private Timestamp creationDate;
     private Timestamp modificationDate;
+
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "question_id", foreignKey = @ForeignKey(name = "fk_poll_answers_poll_question"))
     private PollQuestion question;
     private Boolean correct;
-    @ManyToOne
-    private PollUser creatorUser;
-    @ManyToOne
-    private PollUser modifyingUser;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "modifyingUser", foreignKey = @ForeignKey(name = "fk_user_answers_poll_answer"))
-    private List<UserAnswers> userAnswers;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "creator_user_id", foreignKey = @ForeignKey(name = "fk_poll_answers_creator_user"))
+    private PollUser creatorUser;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "modifying_user_id", foreignKey = @ForeignKey(name = "fk_poll_answers_modifying_user"))
+    private PollUser modifyingUser;
 
     public Integer getId() {
         return id;

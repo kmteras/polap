@@ -14,38 +14,6 @@ public class PollUser {
     private String lastName;
     private String googleUid;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "modifyingUser", foreignKey = @ForeignKey(name = "fk_polls_modifying_user"))
-    private List<Poll> modifiedPolls;
-
-    @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "creatorUser", foreignKey = @ForeignKey(name = "fk_polls_creator_user"))
-    private List<Poll> createdPolls;
-
-    @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "modifyingUser", foreignKey = @ForeignKey(name = "fk_poll_questions_modifying_user"))
-    private List<PollQuestion> modifiedPollQuestions;
-
-    @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "creatorUser", foreignKey = @ForeignKey(name = "fk_poll_questions_creator_user"))
-    private List<PollQuestion> createdPollQuestions;
-
-    @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "modifyingUser", foreignKey = @ForeignKey(name = "fk_poll_answers_modifying_user"))
-    private List<PollQuestion> modifiedPollAnswers;
-
-    @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "creatorUser", foreignKey = @ForeignKey(name = "fk_poll_answers_creator_user"))
-    private List<PollQuestion> createdPollAnswers;
-
-    @OneToMany(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "user", foreignKey = @ForeignKey(name = "fk_user_answers_user"))
-    private List<UserAnswers> userAnswers;
-
-    @OneToMany(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "user", foreignKey = @ForeignKey(name = "fk_requests_user"))
-    private List<Request> requests;
-
     public Integer getId() {
         return id;
     }

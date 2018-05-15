@@ -97,7 +97,7 @@ public class PollApiController {
             question.setModifyingUser(user);
 
             questionRepository.save(question);
-            List<PollQuestionAnswer> questionAnswers = question.getQuestionAnswers();
+            List<PollQuestionAnswer> questionAnswers = answerRepository.findByQuestionId(question.getId());
             for(int j = 0; j < questionAnswers.size(); j++) {
                 PollQuestionAnswer answer = questionAnswers.get(j);
                 answer.setQuestion(question);

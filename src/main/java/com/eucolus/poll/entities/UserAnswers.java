@@ -10,10 +10,12 @@ public class UserAnswers {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "answer_id", foreignKey = @ForeignKey(name = "fk_user_answers_poll_answer"))
     private PollQuestionAnswer answer;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user_answers_user"))
     private PollUser user;
 
     private Timestamp time;

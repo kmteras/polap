@@ -16,14 +16,17 @@ public class PollQuestion {
     private Boolean multipleChoice;
     private Timestamp creationDate;
     private Timestamp modificationDate;
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    private List<PollQuestionAnswer> questionAnswers;
+
     @JsonIgnore
     @ManyToOne
     private Poll poll;
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "creator_user_id", foreignKey = @ForeignKey(name = "fk_poll_questions_creator_user"))
     private PollUser creatorUser;
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "modifying_user_id", foreignKey = @ForeignKey(name = "fk_poll_questions_modifying_user"))
     private PollUser modifyingUser;
 
     public Integer getId() {
@@ -48,14 +51,6 @@ public class PollQuestion {
 
     public void setMultipleChoice(Boolean multipleChoice) {
         this.multipleChoice = multipleChoice;
-    }
-
-    public List<PollQuestionAnswer> getQuestionAnswers() {
-        return questionAnswers;
-    }
-
-    public void setQuestionAnswers(List<PollQuestionAnswer> questionAnswers) {
-        this.questionAnswers = questionAnswers;
     }
 
     public Poll getPoll() {

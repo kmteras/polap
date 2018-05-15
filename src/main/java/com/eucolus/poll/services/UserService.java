@@ -24,10 +24,6 @@ public class UserService {
         String name = (String)details.get("name");
         String email = (String)details.get("email");
 
-        for(String key : details.keySet()) {
-            System.out.println(key + " " + details.get(key));
-        }
-
         PollUser user = userRepository.findByEmail(email);
 
         if(user == null) {

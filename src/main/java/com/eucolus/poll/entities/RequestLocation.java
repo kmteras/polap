@@ -19,10 +19,6 @@ public class RequestLocation {
     private String city;
     private Double latitude;
     private Double longitude;
-    @JsonIgnore
-    @OneToMany(cascade = ALL)
-    @JoinColumn(name = "location", foreignKey = @ForeignKey(name = "fk_requests_location"))
-    private List<Request> requests;
 
     public String getIp() {
         return ip;
@@ -62,14 +58,6 @@ public class RequestLocation {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
-    }
-
-    public List<Request> getRequests() {
-        return requests;
-    }
-
-    public void setRequests(List<Request> requests) {
-        this.requests = requests;
     }
 
     public boolean isSet() {
