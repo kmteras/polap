@@ -13,10 +13,13 @@ public class Poll {
     private String title;
     private Timestamp creationDate;
     private Timestamp modificationDate;
-    @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "poll", foreignKey = @ForeignKey(name = "fk_questions_poll"))
     private List<PollQuestion> questions;
     @ManyToOne
     private PollUser creatorUser;
+    @ManyToOne
+    private PollUser modifyingUser;
 
     public Integer getId() {
         return id;
@@ -64,5 +67,13 @@ public class Poll {
 
     public void setCreatorUser(PollUser creatorUser) {
         this.creatorUser = creatorUser;
+    }
+
+    public PollUser getModifyingUser() {
+        return modifyingUser;
+    }
+
+    public void setModifyingUser(PollUser modifyingUser) {
+        this.modifyingUser = modifyingUser;
     }
 }

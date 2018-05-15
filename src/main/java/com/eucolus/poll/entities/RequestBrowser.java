@@ -17,7 +17,8 @@ public class RequestBrowser {
     private String name;
     private String version;
     @JsonIgnore
-    @OneToMany(cascade = ALL, mappedBy = "browser")
+    @OneToMany(cascade = ALL)
+    @JoinColumn(name = "browser", foreignKey = @ForeignKey(name = "fk_requests_browser"))
     private List<Request> requests;
 
     public Integer getId() {

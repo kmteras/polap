@@ -18,7 +18,8 @@ public class RequestOS {
     @Column(name = "os_group")
     private String group;
     @JsonIgnore
-    @OneToMany(mappedBy = "os")
+    @OneToMany
+    @JoinColumn(name = "os", foreignKey = @ForeignKey(name = "fk_requests_os"))
     private List<Request> requests;
 
     public Integer getId() {
