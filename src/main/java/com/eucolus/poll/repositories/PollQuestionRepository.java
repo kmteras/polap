@@ -10,5 +10,5 @@ import java.util.List;
 
 public interface PollQuestionRepository extends CrudRepository<PollQuestion, Integer> {
     @Query(value = "SELECT * FROM v_poll_questions WHERE poll_id=(:pollId)", nativeQuery = true)
-    List<PollQuestion> find(@Param("pollId") Integer pollId);
+    List<PollQuestion> findByPollId(@Param("pollId") Integer pollId);
 }

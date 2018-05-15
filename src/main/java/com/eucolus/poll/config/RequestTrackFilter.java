@@ -72,7 +72,9 @@ public class RequestTrackFilter implements Filter {
             requestBrowser.setName(browserName);
             requestBrowser.setVersion(browserVersion);
             try {
-                requestBrowser = requestBrowserRepository.save(requestBrowser);
+                //requestBrowser = requestBrowserRepository.save(requestBrowser);
+                int id = requestBrowserRepository.add(requestBrowser);
+                requestBrowser.setId(id);
             } catch (DataIntegrityViolationException error) {
                 //Two requests were made too quickly at first and it tried to save a os twice
                 requestBrowser = requestBrowserRepository.find(browserName, browserVersion);

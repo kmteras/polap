@@ -71,7 +71,7 @@ public class PollApiController {
 
         poll.setModifyingUser(user);
         pollRepository.save(poll);
-        List<PollQuestion> previousQuestionList = questionRepository.find(pollId);
+        List<PollQuestion> previousQuestionList = questionRepository.findByPollId(pollId);
         List<PollQuestion> currentQuestionList = poll.getQuestions();
 
         for(int i = 0; i < currentQuestionList.size(); i++) {

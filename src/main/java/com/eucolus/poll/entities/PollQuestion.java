@@ -19,6 +19,7 @@ public class PollQuestion {
 
     @JsonIgnore
     @ManyToOne
+    @JoinColumn(name = "poll_id", foreignKey = @ForeignKey(name = "fk_poll_questions_poll"))
     private Poll poll;
 
     @ManyToOne(cascade = CascadeType.PERSIST)

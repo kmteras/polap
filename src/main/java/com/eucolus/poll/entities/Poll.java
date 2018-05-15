@@ -14,8 +14,7 @@ public class Poll {
     private Timestamp creationDate;
     private Timestamp modificationDate;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "poll", foreignKey = @ForeignKey(name = "fk_questions_poll"))
+    @OneToMany(mappedBy = "poll")
     private List<PollQuestion> questions;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
@@ -58,14 +57,6 @@ public class Poll {
         this.modificationDate = modificationDate;
     }
 
-    public List<PollQuestion> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(List<PollQuestion> questions) {
-        this.questions = questions;
-    }
-
     public PollUser getCreatorUser() {
         return creatorUser;
     }
@@ -80,5 +71,13 @@ public class Poll {
 
     public void setModifyingUser(PollUser modifyingUser) {
         this.modifyingUser = modifyingUser;
+    }
+
+    public List<PollQuestion> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<PollQuestion> questions) {
+        this.questions = questions;
     }
 }

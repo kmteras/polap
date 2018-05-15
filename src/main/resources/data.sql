@@ -1,8 +1,8 @@
 CREATE OR REPLACE VIEW v_only_main_requests AS SELECT * FROM requests WHERE request_url NOT LIKE '%.%' AND request_url NOT LIKE '/api/%';
 CREATE OR REPLACE VIEW v_only_main_requests_count AS SELECT COUNT(*) FROM requests WHERE request_url NOT LIKE '%.%' AND request_url NOT LIKE '/api/%';
-CREATE OR REPLACE VIEW v_date_history AS SELECT FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(date_time)/(60*60))*(60*60)) AS datetime, COUNT(id) AS count FROM only_main_requests GROUP BY FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(date_time)/(60*60))*(60*60));
-CREATE OR REPLACE VIEW v_os_request_count AS SELECT os_group, COUNT(os_group) FROM only_main_requests JOIN request_oss WHERE request_oss.id = only_main_requests.os_id GROUP BY os_group ORDER BY COUNT(os_group) DESC;
-CREATE OR REPLACE VIEW v_browser_request_count AS SELECT name, COUNT(name) FROM only_main_requests JOIN request_browsers WHERE request_browsers.id = only_main_requests.browser_id GROUP BY name;
+CREATE OR REPLACE VIEW v_date_history AS SELECT FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(date_time)/(60*60))*(60*60)) AS datetime, COUNT(id) AS count FROM v_only_main_requests GROUP BY FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(date_time)/(60*60))*(60*60));
+CREATE OR REPLACE VIEW v_os_request_count AS SELECT os_group, COUNT(os_group) FROM v_only_main_requests JOIN request_oss WHERE request_oss.id = v_only_main_requests.os_id GROUP BY os_group ORDER BY COUNT(os_group) DESC;
+CREATE OR REPLACE VIEW v_browser_request_count AS SELECT name, COUNT(name) FROM v_only_main_requests JOIN request_browsers WHERE request_browsers.id = v_only_main_requests.browser_id GROUP BY name;
 CREATE OR REPLACE VIEW v_poll_question_answers AS SELECT * FROM poll_question_answers;
 CREATE OR REPLACE VIEW v_poll_questions AS SELECT * FROM poll_questions;
 CREATE OR REPLACE VIEW v_request_browsers AS SELECT * FROM request_browsers;
