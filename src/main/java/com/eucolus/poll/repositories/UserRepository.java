@@ -7,6 +7,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface UserRepository extends CrudRepository<PollUser, Integer> {
 
-    @Query(value = "SELECT * FROM users WHERE email=(:email)", nativeQuery = true)
+    @Query(value = "SELECT * FROM v_users WHERE email=(:email)", nativeQuery = true)
     PollUser findByEmail(@Param("email") String email);
 }

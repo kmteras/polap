@@ -10,10 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface RequestOSRepository extends CrudRepository<RequestOS, Integer> {
-    @Query(value = "SELECT * FROM request_oss", nativeQuery = true)
+    @Query(value = "SELECT * FROM v_request_oss", nativeQuery = true)
     List<RequestOS> findAll();
 
-    @Query(value = "SELECT * FROM request_oss WHERE os_name=(:osName) AND os_group=(:osGroup)", nativeQuery = true)
+    @Query(value = "SELECT * FROM v_request_oss WHERE os_name=(:osName) AND os_group=(:osGroup)", nativeQuery = true)
     RequestOS find(@Param("osName") String osName, @Param("osGroup") String osGroup);
 
     @Modifying
