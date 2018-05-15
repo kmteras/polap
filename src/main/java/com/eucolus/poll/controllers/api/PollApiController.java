@@ -6,14 +6,17 @@ import com.eucolus.poll.entities.PollQuestionAnswer;
 import com.eucolus.poll.repositories.PollQuestionAnswerRepository;
 import com.eucolus.poll.repositories.PollQuestionRepository;
 import com.eucolus.poll.repositories.PollRepository;
+import com.eucolus.poll.services.UserService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +30,9 @@ public class PollApiController {
     private PollQuestionRepository questionRepository;
     @Autowired
     private PollQuestionAnswerRepository answerRepository;
+
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/{pollId}/title")
     public @ResponseBody
@@ -54,8 +60,12 @@ public class PollApiController {
 
     @PostMapping(value="/{pollId}", consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody
-    HttpStatus setPoll(@PathVariable(value="pollId") Integer pollId, @RequestBody Poll poll) {
+    HttpStatus setPoll(@PathVariable(value="pollId") Integer pollId, @RequestBody Poll poll, Principal user) {
         poll.setModificationDate(new Timestamp(System.currentTimeMillis()));
+        if(user == null) {
+            return HttpStatus.FORBIDDEN;
+        }
+        poll.setModifyingUser(userService.getUser(user));
         pollRepository.save(poll);
         List<PollQuestion> previousQuestionList = questionRepository.find(pollId);
         List<PollQuestion> currentQuestionList = poll.getQuestions();
