@@ -18,6 +18,6 @@ public interface RequestOSRepository extends CrudRepository<RequestOS, Integer> 
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO request_oss (os_name, os_group) VALUES (:#{#os.name}, :#{#os.group})", nativeQuery = true)
+    @Query(value = "INSERT IGNORE INTO request_oss (os_name, os_group) VALUES (:#{#os.name}, :#{#os.group})", nativeQuery = true)
     Integer add(@Param("os") RequestOS os);
 }
