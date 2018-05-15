@@ -23,6 +23,10 @@ public class PollsController {
 
     @GetMapping("/polls")
     public String polls(Model model, Principal user) {
+        if(user == null) {
+            return "login";
+        }
+
         model.addAttribute("polls", pollRepository.findAll());
         return "polls";
     }
@@ -41,6 +45,12 @@ public class PollsController {
 
     @GetMapping("/polls/{pollId}")
     public String poll(@PathVariable(value="pollId") Integer pollId, Model model, Principal user) {
+        Poll poll = pollRepository.findOne(pollId);
+
+        if(userService.getUser(user) != poll.getCreatorUser()) {
+            return "redirect:/login";
+        }
+
         model.addAttribute("poll", pollRepository.findOne(pollId));
         return "questions";
     }

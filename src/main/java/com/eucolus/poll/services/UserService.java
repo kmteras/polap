@@ -43,6 +43,10 @@ public class UserService {
     }
 
     public PollUser getUser(Principal principal) {
+        if(principal == null) {
+            return null;
+        }
+
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
 
         PollUser pollUser = userRepository.findByEmail((String)details.get("email"));

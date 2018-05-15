@@ -11,6 +11,7 @@ public class LoginController {
     @GetMapping("/login")
     public String polls(Model model, HttpServletRequest request) {
         String referer = request.getHeader("Referer");
+        System.out.println(referer);
         if(referer != null) {
             request.getSession().setAttribute("url_login_redirect", referer);
         }
