@@ -17,6 +17,9 @@ public class PollQuestion {
     private Timestamp creationDate;
     private Timestamp modificationDate;
 
+    @OneToMany(mappedBy = "question")
+    private List<PollQuestionAnswer> questionAnswers;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "poll_id", foreignKey = @ForeignKey(name = "fk_poll_questions_poll"))
@@ -92,5 +95,13 @@ public class PollQuestion {
 
     public void setModifyingUser(PollUser modifyingUser) {
         this.modifyingUser = modifyingUser;
+    }
+
+    public List<PollQuestionAnswer> getQuestionAnswers() {
+        return questionAnswers;
+    }
+
+    public void setQuestionAnswers(List<PollQuestionAnswer> questionAnswers) {
+        this.questionAnswers = questionAnswers;
     }
 }
