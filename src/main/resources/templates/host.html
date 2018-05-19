@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      th:lang="#{language_code}"
+      vocab="http://schema.org/"
+      typeof="WebSite">
+<head>
+    <title th:text="#{host_title}"></title>
+    <th:block layout:include="fragments/head"/>
+    <link rel="stylesheet" type="text/css" href="/css/host.css"/>
+    <script src="/js/host.js"></script>
+
+    <meta id="poll_id" name="pollId" th:content="${poll.id}"/>
+</head>
+<body>
+<th:block layout:replace="fragments/navigation"/>
+<main>
+    <div class="container">
+        <div id="title_div" class="center-align">
+            <h3 id="poll_title" th:text="${poll.title}"></h3>
+        </div>
+
+        <div class="row" id="questions-row">
+            <div class="col s12 m8 offset-m2">
+
+                <ul class="collection" id="questions-wrapper">
+                    <!--question fragments go here-->
+                </ul>
+
+                <div class="row" id="finish-buttons-row">
+                    <div class="col s12">
+                        <a href="/polls" th:text="#{cancel}" class="btn red"></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="hide">
+        <th:block layout:replace="fragments/host_question"/>
+    </div>
+</main>
+<th:block layout:replace="fragments/footer"/>
+</body>
+</html>
