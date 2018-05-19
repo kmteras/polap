@@ -1,0 +1,21 @@
+#side-col {
+    padding-top: 5em;
+    //border-right: solid 2px #cfd8dc;
+}
+
+#main-col {
+    padding-top: 5em;
+}
+
+#question-div {
+    margin-left: 10%;
+}
+
+#answers-div {
+    margin-top: 3em;
+    margin-left: 20%;
+}
+
+.answer-text {
+    display: inline;
+}

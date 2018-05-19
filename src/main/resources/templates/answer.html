@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      th:lang="#{language_code}"
+      vocab="http://schema.org/"
+      typeof="WebSite">
+<head>
+    <!--<title th:text="${poll.title}"></title>-->
+    <th:block layout:include="fragments/head"/>
+    <link rel="stylesheet" type="text/css" href="/css/answer.css"/>
+    <script src="/js/answer.js"></script>
+
+    <!--<meta id="poll_id" name="pollId" th:content="${poll.id}"/>-->
+</head>
+<body>
+<th:block layout:replace="fragments/navigation"/>
+<main>
+    <div class="container">
+
+        <div class="row">
+            <div id="side-col" class="col s12 l4 z-depth-1">
+                <div class="collection">
+                    <!-- Question templates go here -->
+                    <a href="#!" class="collection-item">Alvin</a>
+                    <a href="#!" class="collection-item active">Alvin</a>
+                    <a href="#!" class="collection-item">Alvin</a>
+                    <a href="#!" class="collection-item">Alvin</a>
+                </div>
+
+            </div>
+            <div id="main-col" class="col s12 l8">
+                <div id="question-div">
+                    <h6>Question text Question text Question text Question text Question text Question text Question text Question text Question text Question text</h6>
+                </div>
+                <div id="answers-div">
+                    <th:block layout:replace="fragments/answer_answer"/>
+                    <th:block layout:replace="fragments/answer_answer"/>
+                    <th:block layout:replace="fragments/answer_answer"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="hide">
+        <div id="answer-question-template">
+            <a href="#" class="collection-item"></a>
+        </div>
+        <th:block layout:replace="fragments/answer_answer"/>
+    </div>
+</main>
+<th:block layout:replace="fragments/footer"/>
+</body>
+</html>
