@@ -17,7 +17,7 @@ public class PollQuestionAnswer {
     private Timestamp modificationDate;
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "question_id", foreignKey = @ForeignKey(name = "fk_poll_answers_poll_question"))
     private PollQuestion question;
     private Boolean correct;

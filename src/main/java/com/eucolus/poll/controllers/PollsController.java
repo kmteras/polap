@@ -27,7 +27,7 @@ public class PollsController {
             return "login";
         }
 
-        model.addAttribute("polls", pollRepository.findAll());
+        model.addAttribute("polls", pollRepository.findByOwner(userService.getUser(user)));
         return "polls";
     }
 

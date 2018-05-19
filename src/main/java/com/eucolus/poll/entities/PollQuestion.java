@@ -17,7 +17,7 @@ public class PollQuestion {
     private Timestamp creationDate;
     private Timestamp modificationDate;
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<PollQuestionAnswer> questionAnswers;
 
     @JsonIgnore
