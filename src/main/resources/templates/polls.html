@@ -31,7 +31,16 @@
                 </p>
             </div>
         </div>
-
+        <h3 class="center-align" th:text="#{sessions}"></h3>
+        <div class="row" id="session-row">
+            <div class="col s12 m8 offset-m2">
+                <ul class="collection" id="session-wrapper">
+                    <th:block th:each="session : ${sessions}">
+                        <th:block layout:replace="fragments/poll_session(session=${session})"/>
+                    </th:block>
+                </ul>
+            </div>
+        </div>
     </div>
     <th:block layout:include="fragments/question_edit"/>
     <div class="hide">

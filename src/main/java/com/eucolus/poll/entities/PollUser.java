@@ -53,4 +53,19 @@ public class PollUser {
     public void setGoogleUid(String googleUid) {
         this.googleUid = googleUid;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof PollUser)) {
+            return false;
+        }
+        PollUser user = (PollUser)obj;
+        if(this.googleUid.equals(user.googleUid)) {
+            return true;
+        }
+        else if(this.email.equals(user.email)) {
+            return true;
+        }
+        return false;
+    }
 }

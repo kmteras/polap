@@ -20,6 +20,22 @@ $(document).ready(function () {
             hostPoll(id);
         })
     });
+
+    $(".reconnect-session-button").each(function(i, button) {
+        var $button = $(button);
+        var code = $button.attr("data-id");
+        $button.click(function() {
+            reconnectPoll(code);
+        })
+    });
+
+    $(".end-session-button").each(function(i, button) {
+        var $button = $(button);
+        var code = $button.attr("data-id");
+        $button.click(function() {
+            endSession(code);
+        })
+    });
 });
 
 function deletePoll(id) {
@@ -41,9 +57,14 @@ function deletePoll(id) {
     );
 }
 
-function hostPoll(id) {
-    // TODO:
-    // Request to get usable session id to display and for students to connect with
+function reconnectPoll(code) {
+    window.location.href = "/session/" + code;
+}
 
-    window.location.href = "/host/" + id;
+function endSession(code) {
+    window.location.href = "/session-end/" + code;
+}
+
+function hostPoll(id) {
+    window.location.href = "/session-host/" + id;
 }

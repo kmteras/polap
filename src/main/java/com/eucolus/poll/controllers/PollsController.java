@@ -1,7 +1,9 @@
 package com.eucolus.poll.controllers;
 
 import com.eucolus.poll.entities.Poll;
+import com.eucolus.poll.entities.PollSession;
 import com.eucolus.poll.repositories.PollRepository;
+import com.eucolus.poll.services.PollService;
 import com.eucolus.poll.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,12 +23,15 @@ public class PollsController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private PollService pollService;
+
     @GetMapping("/polls")
     public String polls(Model model, Principal user) {
         if(user == null) {
             return "login";
         }
-
+        model.addAttribute("sessions", pollService.getSessions(userService.getUser(user)));
         model.addAttribute("polls", pollRepository.findByOwner(userService.getUser(user)));
         return "polls";
     }
