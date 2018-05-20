@@ -1,0 +1,31 @@
+#side-col {
+    padding-top: 2em;
+    //border-right: solid 2px #cfd8dc;
+    margin-bottom: 2em;
+}
+
+#questions-collection {
+    margin-top: 3em;
+}
+
+#main-col {
+    padding-top: 3em;
+    margin-bottom: 2em;
+}
+
+#question {
+    margin-left: 10%;
+}
+
+#answers-div {
+    margin-top: 3em;
+    margin-left: 20%;
+}
+
+.answer-text {
+    display: inline;
+}
+
+#save-button {
+    margin-top: 3em;
+}
