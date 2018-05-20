@@ -8,6 +8,7 @@
     <title th:text="#{frontpage_title}"></title>
     <th:block layout:include="fragments/head"/>
     <link rel="stylesheet" type="text/css" href="/css/index.css"/>
+    <script src="/js/index.js"></script>
 </head>
 <body>
 <th:block layout:replace="fragments/navigation"/>
@@ -32,7 +33,7 @@
                         <input id="session_code" type="text"/>
                         <label for="session_code" th:text="#{session_id}"></label>
                     </div>
-                    <a class="btn" th:text="#{join}" href="#"></a>
+                    <a id="join-button" class="btn" th:text="#{join}" href="#"></a>
                 </div>
 
             </div>
