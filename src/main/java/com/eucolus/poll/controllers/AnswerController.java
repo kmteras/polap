@@ -15,12 +15,6 @@ public class AnswerController {
     @Autowired
     private PollRepository pollRepository;
 
-    // Just for development
-    @GetMapping("/answer")
-    public String poll(Model model, Principal user) {
-        return "answer";
-    }
-
     @GetMapping("/answer/{pollId}")
     public String poll(@PathVariable(value="pollId") Integer pollId, Model model, Principal user) {
         model.addAttribute("poll", pollRepository.findOne(pollId));
