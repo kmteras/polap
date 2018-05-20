@@ -12,6 +12,14 @@ $(document).ready(function () {
             deletePoll(id);
         })
     });
+
+    $(".host-button").each(function(i, button) {
+        var $button = $(button);
+        var id = $button.attr("data-id");
+        $button.click(function() {
+            hostPoll(id);
+        })
+    });
 });
 
 function deletePoll(id) {
@@ -31,4 +39,11 @@ function deletePoll(id) {
             }
         }
     );
+}
+
+function hostPoll(id) {
+    // TODO:
+    // Request to get usable session id to display and for students to connect with
+
+    window.location.href = "/host/" + id;
 }
