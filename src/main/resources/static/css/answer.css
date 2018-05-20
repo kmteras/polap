@@ -1,13 +1,19 @@
 #side-col {
-    padding-top: 5em;
+    padding-top: 2em;
     //border-right: solid 2px #cfd8dc;
+    margin-bottom: 2em;
+}
+
+#questions-collection {
+    margin-top: 3em;
 }
 
 #main-col {
-    padding-top: 5em;
+    padding-top: 3em;
+    margin-bottom: 2em;
 }
 
-#question-div {
+#question {
     margin-left: 10%;
 }
 
@@ -18,4 +24,8 @@
 
 .answer-text {
     display: inline;
+}
+
+#save-button {
+    margin-top: 3em;
 }

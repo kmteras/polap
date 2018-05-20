@@ -43,6 +43,7 @@ function deletePoll(id) {
 
 function hostPoll(id) {
     // TODO:
-    // Request to get usable session id
-    // Redirect to eucolus.com/host/{id}
+    // Request to get usable session id to display and for students to connect with
+
+    window.location.href = "/host/" + id;
 }

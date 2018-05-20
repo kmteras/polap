@@ -67,7 +67,7 @@ $(document).ready(function () {
 function getQuestions() {
     $.getJSON(url + "/api/polls/" + pollId, function (data) {
         poll = data;
-        console.log(data);
+        //console.log(data);
         buildQuestions();
     })
 }

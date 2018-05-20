@@ -5,12 +5,12 @@
       vocab="http://schema.org/"
       typeof="WebSite">
 <head>
-    <!--<title th:text="${poll.title}"></title>-->
+    <title th:text="${poll.title}"></title>
     <th:block layout:include="fragments/head"/>
     <link rel="stylesheet" type="text/css" href="/css/answer.css"/>
     <script src="/js/answer.js"></script>
 
-    <!--<meta id="poll_id" name="pollId" th:content="${poll.id}"/>-->
+    <meta id="poll_id" name="pollId" th:content="${poll.id}"/>
 </head>
 <body>
 <th:block layout:replace="fragments/navigation"/>
@@ -18,25 +18,31 @@
     <div class="container">
 
         <div class="row">
-            <div id="side-col" class="col s12 l4 z-depth-1">
-                <div class="collection">
+            <div id="side-col" class="col s12 l4 z-depth-2">
+
+                <h5 id="poll_title" th:text="${poll.title}"></h5>
+
+                <div class="collection" id="questions-collection">
                     <!-- Question templates go here -->
-                    <a href="#!" class="collection-item">Alvin</a>
-                    <a href="#!" class="collection-item active">Alvin</a>
-                    <a href="#!" class="collection-item">Alvin</a>
-                    <a href="#!" class="collection-item">Alvin</a>
                 </div>
 
             </div>
             <div id="main-col" class="col s12 l8">
-                <div id="question-div">
-                    <h6>Question text Question text Question text Question text Question text Question text Question text Question text Question text Question text</h6>
+
+                <div>
+                    <h6 id="question"></h6>
                 </div>
+
                 <div id="answers-div">
-                    <th:block layout:replace="fragments/answer_answer"/>
-                    <th:block layout:replace="fragments/answer_answer"/>
-                    <th:block layout:replace="fragments/answer_answer"/>
+                    <!-- Answer templates go here -->
                 </div>
+
+                <div class="row">
+                    <div class="col l5 offset-l8 m5 offset-m7 s5 offset-s5">
+                        <a href="#" id="save-button" th:text="#{save}" class="btn green"></a>
+                    </div>
+                </div>
+
             </div>
         </div>
 
