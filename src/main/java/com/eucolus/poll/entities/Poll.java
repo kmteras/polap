@@ -1,6 +1,6 @@
 package com.eucolus.poll.entities;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -49,7 +49,6 @@ public class Poll {
         this.title = title;
     }
 
-    @JsonIgnore
     public Timestamp getCreationDate() {
         return creationDate;
     }
@@ -58,7 +57,6 @@ public class Poll {
         this.creationDate = creationDate;
     }
 
-    @JsonIgnore
     public Timestamp getModificationDate() {
         return modificationDate;
     }
@@ -67,7 +65,6 @@ public class Poll {
         this.modificationDate = modificationDate;
     }
 
-    @JsonIgnore
     public PollUser getCreatorUser() {
         return creatorUser;
     }
@@ -76,7 +73,6 @@ public class Poll {
         this.creatorUser = creatorUser;
     }
 
-    @JsonIgnore
     public PollUser getModifyingUser() {
         return modifyingUser;
     }
