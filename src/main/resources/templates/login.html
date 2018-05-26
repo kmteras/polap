@@ -13,11 +13,9 @@
 <th:block layout:replace="fragments/navigation"/>
 <main>
     <div class="container">
-        <div class="row" id="login-row">
-            <div class="col l4 m12 s12" id="login-col">
-                <a class="btn" th:text="#{login}" href="login"></a>
-            </div>
-
+        <h1 class="center-align" th:text="#{login_message}"></h1>
+        <div class="center-align">
+            <a class="btn-large" th:text="#{login_google}" href="login"></a>
         </div>
     </div>
 </main>

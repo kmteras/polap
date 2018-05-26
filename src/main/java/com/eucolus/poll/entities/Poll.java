@@ -1,5 +1,7 @@
 package com.eucolus.poll.entities;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
@@ -11,16 +13,22 @@ public class Poll {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String title;
+
+    @JsonIgnore
     private Timestamp creationDate;
+
+    @JsonIgnore
     private Timestamp modificationDate;
 
     @OneToMany(mappedBy = "poll")
     private List<PollQuestion> questions;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "creator_user_id", foreignKey = @ForeignKey(name = "fk_polls_creator_user"))
     private PollUser creatorUser;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "modifying_user_id", foreignKey = @ForeignKey(name = "fk_polls_modifying_user"))
     private PollUser modifyingUser;
@@ -41,6 +49,7 @@ public class Poll {
         this.title = title;
     }
 
+    @JsonIgnore
     public Timestamp getCreationDate() {
         return creationDate;
     }
@@ -49,6 +58,7 @@ public class Poll {
         this.creationDate = creationDate;
     }
 
+    @JsonIgnore
     public Timestamp getModificationDate() {
         return modificationDate;
     }
@@ -57,6 +67,7 @@ public class Poll {
         this.modificationDate = modificationDate;
     }
 
+    @JsonIgnore
     public PollUser getCreatorUser() {
         return creatorUser;
     }
@@ -65,6 +76,7 @@ public class Poll {
         this.creatorUser = creatorUser;
     }
 
+    @JsonIgnore
     public PollUser getModifyingUser() {
         return modifyingUser;
     }

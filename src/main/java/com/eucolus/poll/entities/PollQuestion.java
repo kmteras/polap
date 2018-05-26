@@ -14,7 +14,11 @@ public class PollQuestion {
     private Integer id;
     private String question;
     private Boolean multipleChoice;
+
+    @JsonIgnore
     private Timestamp creationDate;
+
+    @JsonIgnore
     private Timestamp modificationDate;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
@@ -25,10 +29,12 @@ public class PollQuestion {
     @JoinColumn(name = "poll_id", foreignKey = @ForeignKey(name = "fk_poll_questions_poll"))
     private Poll poll;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "creator_user_id", foreignKey = @ForeignKey(name = "fk_poll_questions_creator_user"))
     private PollUser creatorUser;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "modifying_user_id", foreignKey = @ForeignKey(name = "fk_poll_questions_modifying_user"))
     private PollUser modifyingUser;

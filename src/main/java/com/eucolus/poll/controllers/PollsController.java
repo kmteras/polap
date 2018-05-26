@@ -53,7 +53,7 @@ public class PollsController {
         Poll poll = pollRepository.findOne(pollId);
 
         if(userService.getUser(user) != poll.getCreatorUser()) {
-            return "redirect:/login";
+            return "login";
         }
 
         model.addAttribute("poll", pollRepository.findOne(pollId));

@@ -13,19 +13,27 @@ public class PollQuestionAnswer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String answer;
+
+    @JsonIgnore
     private Timestamp creationDate;
+
+    @JsonIgnore
     private Timestamp modificationDate;
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "question_id", foreignKey = @ForeignKey(name = "fk_poll_answers_poll_question"))
     private PollQuestion question;
+
+    @JsonIgnore
     private Boolean correct;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "creator_user_id", foreignKey = @ForeignKey(name = "fk_poll_answers_creator_user"))
     private PollUser creatorUser;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "modifying_user_id", foreignKey = @ForeignKey(name = "fk_poll_answers_modifying_user"))
     private PollUser modifyingUser;
