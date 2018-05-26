@@ -39,7 +39,9 @@
     </div>
     <div class="hide">
         <th:block layout:replace="fragments/host_question"/>
+        <th:block layout:include="fragments/statistics_answer"/>
     </div>
+    <th:block layout:include="fragments/statistics"/>
 </main>
 <th:block layout:replace="fragments/footer"/>
 </body>
