@@ -44,6 +44,11 @@ function buildQuestions() {
         $template.text(question.question);
         $template.click(question.id, changeQuestion);
         questionsCollection.append($template);
+
+        for (var j = 0; j < question.questionAnswers.length; j++) {
+            var answer = question.questionAnswers[j];
+            answer.checked = false;
+        }
     }
 
     activateFirstQuestion();
@@ -101,6 +106,10 @@ function buildAnswers(question) {
         $template.find("input").first().attr("answer_id", answer.id);
         $template.find(".answer-text").first().text(answer.answer);
 
+        if (answer.checked) {
+            $template.find("input").first().prop('checked', true);
+        }
+
         answersArea.append($template);
     }
 }
@@ -111,7 +120,7 @@ function sendAnswersToServer() {
     for (var i = 0; i < question.questionAnswers.length; i++) {
         var id = question.questionAnswers[i].id;
         var chosen = $('input[answer_id=' + id + ']').first().prop("checked");
-        // whether the user picked this answer
+        question.questionAnswers[i].checked = chosen;
     }
 
     // TODO:
