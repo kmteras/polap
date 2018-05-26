@@ -37,38 +37,76 @@ public class PollApiController {
 
     @PostMapping("/{pollId}/title")
     public @ResponseBody
-    void setTitle(@PathVariable(value="pollId") Integer pollId, @RequestParam Map<String, String> params) {
+    HttpStatus setTitle(@PathVariable(value="pollId") Integer pollId, @RequestParam Map<String, String> params, Principal principal) {
+        if(principal == null) {
+            return HttpStatus.FORBIDDEN;
+        }
+
         Poll poll = pollRepository.findOne(pollId);
+
+        if(!userService.getUser(principal).equals(poll.getCreatorUser())) {
+            return HttpStatus.FORBIDDEN;
+        }
+
         poll.setTitle(params.get("title"));
         pollRepository.save(poll);
+        return HttpStatus.OK;
     }
 
     @DeleteMapping("/{pollId}")
     public @ResponseBody
-    void deletePost(@PathVariable(value="pollId") Integer pollId) {
+    HttpStatus deletePost(@PathVariable(value="pollId") Integer pollId, Principal principal) {
+        if(principal == null) {
+            return HttpStatus.FORBIDDEN;
+        }
+
         Poll poll = pollRepository.findOne(pollId);
 
-        if(poll != null) {
-            pollRepository.delete(pollId);
+        if(!userService.getUser(principal).equals(poll.getCreatorUser())) {
+            return HttpStatus.FORBIDDEN;
         }
+
+        pollRepository.delete(pollId);
+        return HttpStatus.OK;
     }
 
     @GetMapping("/{pollId}")
     public @ResponseBody
-    Poll getPoll(@PathVariable(value="pollId") Integer pollId) {
-        return pollRepository.findOne(pollId);
+    Poll getPoll(@PathVariable(value="pollId") Integer pollId, Principal principal) {
+        if(principal == null) {
+            return null;
+        }
+
+        Poll poll = pollRepository.findOne(pollId);
+
+        if(!userService.getUser(principal).equals(poll.getCreatorUser())) {
+            return null;
+        }
+
+        return poll;
     }
 
     @PostMapping(value="/{pollId}", consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody
     HttpStatus setPoll(@PathVariable(value="pollId") Integer pollId, @RequestBody Poll poll, Principal principal) {
-        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-        poll.setModificationDate(currentTime);
         if(principal == null) {
             return HttpStatus.FORBIDDEN;
         }
+
         PollUser user = userService.getUser(principal);
 
+        Poll lastPoll = pollRepository.findOne(pollId);
+
+        if(!user.equals(lastPoll.getCreatorUser())) {
+            return HttpStatus.FORBIDDEN;
+        }
+
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+
+        poll.setCreationDate(lastPoll.getCreationDate());
+        poll.setCreatorUser(lastPoll.getCreatorUser());
+
+        poll.setModificationDate(currentTime);
         poll.setModifyingUser(user);
         pollRepository.save(poll);
         List<PollQuestion> previousQuestionList = questionRepository.findByPollId(pollId);

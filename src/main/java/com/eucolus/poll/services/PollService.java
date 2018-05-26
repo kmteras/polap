@@ -52,6 +52,10 @@ public class PollService {
 
     private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
+    public Poll getPoll(String sessionCode) {
+        return findSession(sessionCode).getPoll();
+    }
+
     private String generateCode() {
         StringBuilder code = new StringBuilder();
 

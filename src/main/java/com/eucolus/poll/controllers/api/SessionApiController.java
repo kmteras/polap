@@ -3,6 +3,7 @@ package com.eucolus.poll.controllers.api;
 import com.eucolus.poll.entities.Poll;
 import com.eucolus.poll.entities.PollQuestion;
 import com.eucolus.poll.entities.PollQuestionAnswer;
+import com.eucolus.poll.repositories.PollRepository;
 import com.eucolus.poll.services.PollService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,13 +13,22 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
-@RequestMapping(path="/api/answers")
-public class AnswerApiController {
+@RequestMapping(path="/api/sessions")
+public class SessionApiController {
 
     @Autowired
-    private PollService pollSErvice;
+    private PollService pollService;
 
-    @PostMapping("/{sessionCode}")
+    @Autowired
+    private PollRepository pollRepository;
+
+    @GetMapping("/poll/{sessionCode}")
+    public @ResponseBody
+    Poll poll(@PathVariable(value="sessionCode") String sessionCode) {
+        return pollRepository.findOne(pollService.getPoll(sessionCode).getId());
+    }
+
+    @PostMapping("/answer/{sessionCode}")
     public @ResponseBody
     void answer(@PathVariable(value="sessionCode") String sessionCode, @RequestBody Poll poll, Principal principal) {
 

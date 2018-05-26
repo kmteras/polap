@@ -1,6 +1,7 @@
 var url;
 var pollId;
 var poll;
+var sessionCode;
 
 var questionsCollection;
 var answerQuestionTemplate;
@@ -13,6 +14,7 @@ var currentQuestionId;
 $(document).ready(function () {
     url = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
     pollId = $("#poll_id").attr("content");
+    sessionCode = $("#session_code").attr("content");
 
     questionsCollection = $("#questions-collection");
     answerQuestionTemplate = $("#answer-question-template").children().first();
@@ -26,7 +28,7 @@ $(document).ready(function () {
 });
 
 function getQuestions() {
-    $.getJSON(url + "/api/polls/" + pollId, function (data) {
+    $.getJSON(url + "/api/sessions/poll/" + sessionCode, function (data) {
         poll = data;
         console.log(data);
         buildQuestions();
@@ -122,6 +124,23 @@ function sendAnswersToServer() {
         var chosen = $('input[answer_id=' + id + ']').first().prop("checked");
         question.questionAnswers[i].checked = chosen;
     }
+
+    var url = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
+
+    $.ajax({
+            url: url + "/api/answers/" + sessionCode,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            type: "DELETE",
+            success: function (msg) {
+                $("#poll_" + id).remove();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log(XMLHttpRequest);
+            }
+        }
+    );
 
     // TODO:
     // Send answer data to server so a API request could
