@@ -4,6 +4,7 @@ import com.eucolus.poll.entities.Poll;
 import com.eucolus.poll.entities.PollSession;
 import com.eucolus.poll.entities.PollUser;
 import com.eucolus.poll.repositories.PollRepository;
+import com.eucolus.poll.repositories.PollSessionRepository;
 import com.eucolus.poll.services.PollService;
 import com.eucolus.poll.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

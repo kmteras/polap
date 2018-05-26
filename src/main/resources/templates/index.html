@@ -24,7 +24,8 @@
 
                 <div class="col s12 m6 l12">
                     <h5 th:text="#{teacher_dir}">Create polls for your students:</h5>
-                    <a class="btn-large" id="login-btn" th:text="#{teacher_login}" href="/polls"></a>
+                    <a th:if="${user}" class="btn-large" id="login-btn" th:text="#{polls_title}" href="/polls"></a>
+                    <a th:unless="${user}" class="btn-large" id="polls-btn" th:text="#{teacher_login}" href="/polls"></a>
                 </div>
 
                 <div class="col s12 m6 l12">

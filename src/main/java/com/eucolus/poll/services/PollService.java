@@ -3,6 +3,8 @@ package com.eucolus.poll.services;
 import com.eucolus.poll.entities.Poll;
 import com.eucolus.poll.entities.PollSession;
 import com.eucolus.poll.entities.PollUser;
+import com.eucolus.poll.repositories.PollSessionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -13,6 +15,9 @@ import java.util.Map;
 
 @Service
 public class PollService {
+    @Autowired
+    private PollSessionRepository pollSessionRepository;
+
     private Map<String, PollSession> sessions;
 
     public PollService() {
@@ -31,13 +36,15 @@ public class PollService {
         pollSession.setPoll(poll);
         pollSession.setHost(user);
         sessions.put(code, pollSession);
+        pollSessionRepository.save(pollSession);
         return pollSession;
     }
 
     public void endSession(PollSession pollSession) {
         pollSession.setEndTime(new Timestamp(System.currentTimeMillis()));
+
+        pollSessionRepository.save(pollSession);
         sessions.remove(pollSession.getCode());
-        //TODO: Save session to database
     }
 
     public List<PollSession> getSessions(PollUser host) {
@@ -48,6 +55,10 @@ public class PollService {
             }
         }
         return sessionList;
+    }
+
+    public PollSession getSavedSession(String sessionCode) {
+        return pollSessionRepository.findOne(findSession(sessionCode).getId());
     }
 
     private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

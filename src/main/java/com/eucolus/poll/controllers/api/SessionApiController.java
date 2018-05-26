@@ -1,16 +1,20 @@
 package com.eucolus.poll.controllers.api;
 
-import com.eucolus.poll.entities.Poll;
-import com.eucolus.poll.entities.PollQuestion;
-import com.eucolus.poll.entities.PollQuestionAnswer;
+import com.eucolus.poll.entities.*;
+import com.eucolus.poll.repositories.PollQuestionAnswerRepository;
 import com.eucolus.poll.repositories.PollRepository;
+import com.eucolus.poll.repositories.UserAnswerRepository;
 import com.eucolus.poll.services.PollService;
+import com.eucolus.poll.services.UserService;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import java.security.Principal;
-import java.util.List;
+import java.sql.Timestamp;
 
 @Controller
 @RequestMapping(path="/api/sessions")
@@ -22,6 +26,15 @@ public class SessionApiController {
     @Autowired
     private PollRepository pollRepository;
 
+    @Autowired
+    private PollQuestionAnswerRepository pollQuestionAnswerRepository;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserAnswerRepository userAnswerRepository;
+
     @GetMapping("/poll/{sessionCode}")
     public @ResponseBody
     Poll poll(@PathVariable(value="sessionCode") String sessionCode) {
@@ -30,22 +43,53 @@ public class SessionApiController {
 
     @PostMapping("/answer/{sessionCode}")
     public @ResponseBody
-    void answer(@PathVariable(value="sessionCode") String sessionCode, @RequestBody Poll poll, Principal principal) {
+    void answer(@PathVariable(value="sessionCode") String sessionCode, @RequestBody String poll, Principal principal) {
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 
-        System.out.println(poll.getTitle());
-        List<PollQuestion> currentQuestionList = poll.getQuestions();
+        String springSession = RequestContextHolder.currentRequestAttributes().getSessionId();
 
-        for(int i = 0; i < currentQuestionList.size(); i++) {
-            PollQuestion question = currentQuestionList.get(i);
+        System.out.println();
 
-            System.out.println(question.getQuestion());
+        PollUser pollUser = userService.getUser(principal);
 
-            List<PollQuestionAnswer> questionAnswers = question.getQuestionAnswers();
+        PollSession pollSession = pollService.getSavedSession(sessionCode);
 
-            for(int j = 0; j < questionAnswers.size(); j++) {
-                PollQuestionAnswer answer = questionAnswers.get(j);
+        JSONObject jsonObject = new JSONObject(poll);
+        JSONArray questionArray = jsonObject.getJSONArray("questions");
 
-                System.out.println(answer.getAnswer() + " " + answer.getCorrect());
+        for (int i = 0; i < questionArray.length(); i++) {
+            JSONObject question = questionArray.getJSONObject(i);
+
+            JSONArray answerArray = question.getJSONArray("questionAnswers");
+
+            for (int j = 0; j < answerArray.length(); j++) {
+                JSONObject answer = answerArray.getJSONObject(j);
+
+                int answerId = answer.getInt("id");
+
+                PollQuestionAnswer pollQuestionAnswer = pollQuestionAnswerRepository.findOne(answerId);
+
+                UserAnswer userAnswer = userAnswerRepository.getBySessionCode(answerId, springSession);
+
+                if(userAnswer == null) {
+                    userAnswer = new UserAnswer();
+                }
+
+                Boolean isCorrect = pollQuestionAnswer.getCorrect();
+
+                if(isCorrect == null) {
+                    isCorrect = false;
+                }
+
+                userAnswer.setCorrect(isCorrect.equals(answer.getBoolean("checked")));
+                userAnswer.setSession(pollSession);
+                userAnswer.setTime(currentTime);
+                userAnswer.setAnswer(pollQuestionAnswer);
+
+                userAnswer.setSpringSessionCode(springSession);
+                userAnswer.setUser(pollUser);
+
+                userAnswerRepository.save(userAnswer);
             }
         }
     }

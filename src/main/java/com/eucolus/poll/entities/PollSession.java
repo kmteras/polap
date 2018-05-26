@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
+@Table(name = "poll_sessions")
 public class PollSession {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
