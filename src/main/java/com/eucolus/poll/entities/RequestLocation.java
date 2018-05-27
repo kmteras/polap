@@ -2,10 +2,7 @@ package com.eucolus.poll.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import java.util.List;
@@ -22,9 +19,6 @@ public class RequestLocation {
     private String city;
     private Double latitude;
     private Double longitude;
-    @JsonIgnore
-    @OneToMany(cascade = ALL, mappedBy = "location")
-    private List<Request> requests;
 
     public String getIp() {
         return ip;
@@ -64,14 +58,6 @@ public class RequestLocation {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
-    }
-
-    public List<Request> getRequests() {
-        return requests;
-    }
-
-    public void setRequests(List<Request> requests) {
-        this.requests = requests;
     }
 
     public boolean isSet() {

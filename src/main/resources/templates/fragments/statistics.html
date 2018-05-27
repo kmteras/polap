@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      th:remove="tag">
+
+<div id="statistics" class="modal modal-fixed-footer">
+    <h4 id="modal-question" class="center-align"></h4>
+
+    <div class="modal-content">
+        <ul class="collection" id="answers-wrapper">
+            <!-- answer templates go here -->
+        </ul>
+    </div>
+
+    <div class="modal-footer">
+        <p class="center-align" id="modal-close-button-wrap">
+            <a href="#!" class="modal-action modal-close btn green" th:text="#{done}"></a>
+        </p>
+    </div>
+</div>
+</html>

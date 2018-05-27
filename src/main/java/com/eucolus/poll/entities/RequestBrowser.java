@@ -16,9 +16,6 @@ public class RequestBrowser {
     private Integer id;
     private String name;
     private String version;
-    @JsonIgnore
-    @OneToMany(cascade = ALL, mappedBy = "browser")
-    private List<Request> requests;
 
     public Integer getId() {
         return id;
@@ -42,13 +39,5 @@ public class RequestBrowser {
 
     public void setVersion(String version) {
         this.version = version;
-    }
-
-    public List<Request> getRequests() {
-        return requests;
-    }
-
-    public void setRequests(List<Request> requests) {
-        this.requests = requests;
     }
 }

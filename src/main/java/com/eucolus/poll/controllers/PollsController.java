@@ -1,7 +1,10 @@
 package com.eucolus.poll.controllers;
 
 import com.eucolus.poll.entities.Poll;
+import com.eucolus.poll.entities.PollSession;
 import com.eucolus.poll.repositories.PollRepository;
+import com.eucolus.poll.services.PollService;
+import com.eucolus.poll.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,9 +20,19 @@ public class PollsController {
     @Autowired
     private PollRepository pollRepository;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private PollService pollService;
+
     @GetMapping("/polls")
     public String polls(Model model, Principal user) {
-        model.addAttribute("polls", pollRepository.findAll());
+        if(user == null) {
+            return "login";
+        }
+        model.addAttribute("sessions", pollService.getSessions(userService.getUser(user)));
+        model.addAttribute("polls", pollRepository.findByOwner(userService.getUser(user)));
         return "polls";
     }
 
@@ -28,6 +41,7 @@ public class PollsController {
         Poll newPoll = new Poll();
         newPoll.setTitle("Title");
         newPoll.setCreationDate(new Timestamp(System.currentTimeMillis()));
+        newPoll.setCreatorUser(userService.getUser(user));
         pollRepository.save(newPoll);
 
         model.addAttribute("poll", newPoll);
@@ -36,6 +50,12 @@ public class PollsController {
 
     @GetMapping("/polls/{pollId}")
     public String poll(@PathVariable(value="pollId") Integer pollId, Model model, Principal user) {
+        Poll poll = pollRepository.findOne(pollId);
+
+        if(userService.getUser(user) != poll.getCreatorUser()) {
+            return "login";
+        }
+
         model.addAttribute("poll", pollRepository.findOne(pollId));
         return "questions";
     }

@@ -8,6 +8,7 @@
     <title th:text="#{frontpage_title}"></title>
     <th:block layout:include="fragments/head"/>
     <link rel="stylesheet" type="text/css" href="/css/index.css"/>
+    <script src="/js/index.js"></script>
 </head>
 <body>
 <th:block layout:replace="fragments/navigation"/>
@@ -23,7 +24,8 @@
 
                 <div class="col s12 m6 l12">
                     <h5 th:text="#{teacher_dir}">Create polls for your students:</h5>
-                    <a class="btn-large" id="login-btn" th:text="#{teacher_login}" href="/polls"></a>
+                    <a th:if="${user}" class="btn-large" id="login-btn" th:text="#{polls_title}" href="/polls"></a>
+                    <a th:unless="${user}" class="btn-large" id="polls-btn" th:text="#{teacher_login}" href="/polls"></a>
                 </div>
 
                 <div class="col s12 m6 l12">
@@ -32,7 +34,7 @@
                         <input id="session_code" type="text"/>
                         <label for="session_code" th:text="#{session_id}"></label>
                     </div>
-                    <a class="btn" th:text="#{join}" href="#"></a>
+                    <a id="join-button" class="btn" th:text="#{join}" href="#"></a>
                 </div>
 
             </div>

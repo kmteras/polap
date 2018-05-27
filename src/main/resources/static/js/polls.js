@@ -12,6 +12,30 @@ $(document).ready(function () {
             deletePoll(id);
         })
     });
+
+    $(".host-button").each(function(i, button) {
+        var $button = $(button);
+        var id = $button.attr("data-id");
+        $button.click(function() {
+            hostPoll(id);
+        })
+    });
+
+    $(".reconnect-session-button").each(function(i, button) {
+        var $button = $(button);
+        var code = $button.attr("data-id");
+        $button.click(function() {
+            reconnectPoll(code);
+        })
+    });
+
+    $(".end-session-button").each(function(i, button) {
+        var $button = $(button);
+        var code = $button.attr("data-id");
+        $button.click(function() {
+            endSession(code);
+        })
+    });
 });
 
 function deletePoll(id) {
@@ -31,4 +55,16 @@ function deletePoll(id) {
             }
         }
     );
+}
+
+function reconnectPoll(code) {
+    window.location.href = "/session/" + code;
+}
+
+function endSession(code) {
+    window.location.href = "/session-end/" + code;
+}
+
+function hostPoll(id) {
+    window.location.href = "/session-host/" + id;
 }

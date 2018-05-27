@@ -9,15 +9,25 @@ public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "location_ip", foreignKey = @ForeignKey(name = "fk_requests_location"))
     private RequestLocation location;
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "os_id", foreignKey = @ForeignKey(name = "fk_requests_os"))
     private RequestOS os;
     private String requestType;
     private String requestUrl;
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "browser_id", foreignKey = @ForeignKey(name = "fk_requests_browser"))
     private RequestBrowser browser;
     private Timestamp dateTime;
+
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_requests_user"))
+    private PollUser user;
 
     public Integer getId() {
         return id;
@@ -73,5 +83,13 @@ public class Request {
 
     public void setLocation(RequestLocation location) {
         this.location = location;
+    }
+
+    public PollUser getUser() {
+        return user;
+    }
+
+    public void setUser(PollUser user) {
+        this.user = user;
     }
 }

@@ -4,6 +4,9 @@
     <div>
         <span class="question-text" th:text="${poll.title}">{question}</span>
         <span class="secondary-content">
+            <a href="#" th:attr="data-id=${poll.id}" class="host-button">
+                <i class="material-icons question-list-icon green-text text-darken-3">play_circle_outline</i>
+            </a>
             <a th:href="@{/polls/{id}(id=${poll.id})}">
                 <i class="material-icons question-list-icon">edit</i>
             </a>
