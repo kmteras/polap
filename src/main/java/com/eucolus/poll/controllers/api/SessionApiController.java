@@ -55,12 +55,10 @@ public class SessionApiController {
             return "";
         }
 
-        JSONObject jsonObject = new JSONObject();
+
         Poll poll = pollRepository.findOne(pollSession.getPoll().getId());
 
         List<PollQuestion> pollQuestionList = poll.getQuestions();
-
-        JSONArray jsonArray = new JSONArray();
 
         List<Object[]> userAnswerPercentages = userAnswerRepository.getSelectedPercentage(pollSessionId);
         List<Object[]> userTotalPercentages = userAnswerRepository.getTotalPercentage(pollSessionId);
@@ -68,31 +66,62 @@ public class SessionApiController {
         Map<Integer, Integer> userSelectedPercentageMap = new HashMap<>();
         Map<Integer, Integer> userPercentageMap = new HashMap<>();
 
-        for(int i = 0; i < userSelectedPercentageMap.size(); i++) {
+        for(int i = 0; i < userAnswerPercentages.size(); i++) {
             Integer answerId = (Integer)userAnswerPercentages.get(i)[0];
             BigInteger count = (BigInteger)userAnswerPercentages.get(i)[1];
             userSelectedPercentageMap.put(answerId, count.intValue());
+            System.out.println(answerId + " " + count);
         }
 
-        for(int i = 0; i < userPercentageMap.size(); i++) {
+        System.out.println();
+
+        for(int i = 0; i < userTotalPercentages.size(); i++) {
             Integer answerId = (Integer)userTotalPercentages.get(i)[0];
             BigInteger count = (BigInteger)userTotalPercentages.get(i)[1];
             userPercentageMap.put(answerId, count.intValue());
+            System.out.println(answerId + " " + count);
         }
+
+        JSONObject jsonObject = new JSONObject();
+
+        JSONArray jsonArray = new JSONArray();
 
         for(int i = 0; i < pollQuestionList.size(); i++) {
             PollQuestion pollQuestion = pollQuestionList.get(i);
 
             List<PollQuestionAnswer> pollQuestionAnswers = pollQuestion.getQuestionAnswers();
 
+            JSONObject jsonQuestion = new JSONObject();
+
+            jsonQuestion.put("id", pollQuestion.getId());
+            jsonQuestion.put("question", pollQuestion.getQuestion());
+
+            JSONArray answerArray = new JSONArray();
+
             for(int j = 0; j < pollQuestionAnswers.size(); j++) {
+                JSONObject jsonAnswer = new JSONObject();
                 PollQuestionAnswer pollQuestionAnswer = pollQuestionAnswers.get(j);
 
-                Double percentage = (double)userSelectedPercentageMap.getOrDefault(pollQuestionAnswer.getId(), 0) /
-                        (double)userPercentageMap.get(pollQuestionAnswer.getId());
+                int selected = userSelectedPercentageMap.getOrDefault(pollQuestionAnswer.getId(), 0);
+
+                Double percentage = (double)selected /
+                        (double)userPercentageMap.get(pollQuestionAnswer.getId()) * 100;
+
+                jsonAnswer.put("id", pollQuestionAnswer.getId());
+                jsonAnswer.put("answer", pollQuestionAnswer.getAnswer());
+                jsonAnswer.put("correct", pollQuestionAnswer.getCorrect());
+
+                jsonAnswer.put("selected", selected);
+                jsonAnswer.put("percentage", Math.round(percentage * 100.0)/100.0);
+
+                answerArray.put(jsonAnswer);
 
                 System.out.println(percentage);
             }
+
+            jsonQuestion.put("answers", answerArray);
+
+            jsonArray.put(jsonQuestion);
         }
 
         jsonObject.put("statistics", jsonArray);
