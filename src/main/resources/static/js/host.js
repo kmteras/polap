@@ -32,7 +32,7 @@ $(document).ready(function () {
 function getQuestions() {
     $.getJSON(url + "/api/polls/" + pollId, function (data) {
         poll = data;
-        console.log(data);
+        //console.log(data);
         buildQuestions();
     })
 }
@@ -56,7 +56,7 @@ function addQuestion(questionData) {
     }
 
     $template.attr("id", "question_row_" + questionData.htmlId);
-    $template.find("a").first().attr("id", questionData.htmlId);
+    $template.find("a").first().attr("id", questionData.id);
     $template.find(".question-text").html(questionData.question);
 
     $template.find("a").first().on("click", onStatisticsButtonClick);
@@ -75,8 +75,23 @@ function onStatisticsButtonClick(event) {
 
     // var stats = getStatsFromApiEndpointThatTerasHopefullyMakes(id)
 
+    $.getJSON(url + "/api/sessions/statistics/" + $("#session_id").text(), function (data) {
+        console.log(data);
+        buildAnswers(data, id);
+    });
+}
+
+function buildAnswers(stats, id) {
+
+    for (var i = 0; i < stats.statistics.length; i++) {
+        if (stats.statistics[i].id === id) {
+            stats = stats.statistics[i].answers;
+            break;
+        }
+    }
+
     for (var i = 0; i < poll.questions.length; i++) {
-        if (poll.questions[i].htmlId === id) {
+        if (poll.questions[i].id === id) {
             $("#modal-question").text(poll.questions[i].question);
         }
     }
@@ -86,7 +101,7 @@ function onStatisticsButtonClick(event) {
         var $template = $("#statistics-answer-template").find("li").first().clone();
 
         $template.find(".answer-text").first().text(stats[i].answer);
-        $template.find(".percent").first().text(stats[i].percent.toString() + "%");
+        $template.find(".percent").first().text(stats[i].percentage.toString() + "%");
 
         if (stats[i].correct === true) { // as opposed to a string, for example
             $template.find(".percent").first().css("color", "#4caf50");
