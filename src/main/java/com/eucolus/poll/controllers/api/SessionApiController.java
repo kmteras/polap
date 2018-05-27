@@ -70,16 +70,12 @@ public class SessionApiController {
             Integer answerId = (Integer)userAnswerPercentages.get(i)[0];
             BigInteger count = (BigInteger)userAnswerPercentages.get(i)[1];
             userSelectedPercentageMap.put(answerId, count.intValue());
-            System.out.println(answerId + " " + count);
         }
-
-        System.out.println();
 
         for(int i = 0; i < userTotalPercentages.size(); i++) {
             Integer answerId = (Integer)userTotalPercentages.get(i)[0];
             BigInteger count = (BigInteger)userTotalPercentages.get(i)[1];
             userPercentageMap.put(answerId, count.intValue());
-            System.out.println(answerId + " " + count);
         }
 
         JSONObject jsonObject = new JSONObject();
@@ -109,14 +105,19 @@ public class SessionApiController {
 
                 jsonAnswer.put("id", pollQuestionAnswer.getId());
                 jsonAnswer.put("answer", pollQuestionAnswer.getAnswer());
-                jsonAnswer.put("correct", pollQuestionAnswer.getCorrect());
+
+                Boolean correct = pollQuestionAnswer.getCorrect();
+
+                if(correct == null) {
+                    correct = false;
+                }
+
+                jsonAnswer.put("correct", correct);
 
                 jsonAnswer.put("selected", selected);
                 jsonAnswer.put("percentage", Math.round(percentage * 100.0)/100.0);
 
                 answerArray.put(jsonAnswer);
-
-                System.out.println(percentage);
             }
 
             jsonQuestion.put("answers", answerArray);
