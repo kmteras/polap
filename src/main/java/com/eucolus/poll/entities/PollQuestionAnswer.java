@@ -25,7 +25,6 @@ public class PollQuestionAnswer {
     @JoinColumn(name = "question_id", foreignKey = @ForeignKey(name = "fk_poll_answers_poll_question"))
     private PollQuestion question;
 
-    @JsonIgnore
     private Boolean correct;
 
     @JsonIgnore

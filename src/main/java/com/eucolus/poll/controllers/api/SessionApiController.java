@@ -8,7 +8,6 @@ import com.eucolus.poll.services.PollService;
 import com.eucolus.poll.services.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.codehaus.groovy.util.HashCodeHelper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -162,6 +161,8 @@ public class SessionApiController {
 
                 for (int j = 0; j < answerArray.length(); j++) {
                     JSONObject answer = answerArray.getJSONObject(j);
+
+                    answer.remove("correct");
 
                     int answerId = answer.getInt("id");
 
