@@ -101,9 +101,6 @@ public class SessionApiController {
                 int selected = userSelectedPercentageMap.getOrDefault(pollQuestionAnswer.getId(), 0);
                 int total = userPercentageMap.get(pollQuestionAnswer.getId());
 
-                Double percentage = (double)selected /
-                        (double)userPercentageMap.get(pollQuestionAnswer.getId()) * 100;
-
                 jsonAnswer.put("id", pollQuestionAnswer.getId());
                 jsonAnswer.put("answer", pollQuestionAnswer.getAnswer());
 
@@ -111,6 +108,17 @@ public class SessionApiController {
 
                 if(correct == null) {
                     correct = false;
+                }
+
+                Double percentage;
+
+                if(correct) {
+                    percentage = (double) selected /
+                            (double) userPercentageMap.get(pollQuestionAnswer.getId()) * 100;
+                }
+                else {
+                    percentage = (double) (userPercentageMap.get(pollQuestionAnswer.getId())- selected) /
+                            (double) userPercentageMap.get(pollQuestionAnswer.getId()) * 100;
                 }
 
                 jsonAnswer.put("correct", correct);
