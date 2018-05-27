@@ -55,7 +55,9 @@ function buildQuestions() {
 
         for (var j = 0; j < question.questionAnswers.length; j++) {
             var answer = question.questionAnswers[j];
-            answer.checked = false;
+            if(answer.checked === undefined) {
+                answer.checked = false;
+            }
         }
     }
 
