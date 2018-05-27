@@ -66,7 +66,7 @@ CREATE PROCEDURE
   user_answers(IN email VARCHAR(255))
 BEGIN
   CALL user_id(email, @id);
-  SELECT answer, correct, question, multiple_choice, title
+  SELECT answer, checked, question, multiple_choice, title
   FROM poll_question_answers
     JOIN poll_questions question on poll_question_answers.question_id = question.id
     JOIN polls ON question.poll_id = polls.id

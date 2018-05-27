@@ -22,7 +22,7 @@ public class UserAnswer {
     @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user_answers_user"))
     private PollUser user;
 
-    private boolean correct;
+    private boolean checked;
 
     private Timestamp time;
 
@@ -68,12 +68,12 @@ public class UserAnswer {
         this.time = time;
     }
 
-    public boolean isCorrect() {
-        return correct;
+    public boolean isChecked() {
+        return checked;
     }
 
-    public void setCorrect(boolean correct) {
-        this.correct = correct;
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 
     public String getSpringSessionCode() {

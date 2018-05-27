@@ -8,6 +8,7 @@ import com.eucolus.poll.services.PollService;
 import com.eucolus.poll.services.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.codehaus.groovy.util.HashCodeHelper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 
+import java.math.BigInteger;
 import java.security.Principal;
 import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(path="/api/sessions")
@@ -36,6 +41,64 @@ public class SessionApiController {
 
     @Autowired
     private UserAnswerRepository userAnswerRepository;
+
+    @GetMapping("/statistics/{sessionCode}")
+    public @ResponseBody
+    String poll(@PathVariable(value="sessionCode") String sessionCode, Principal principal) {
+        PollSession pollSession = pollService.findSession(sessionCode);
+
+        int pollSessionId = pollSession.getId();
+
+        PollUser pollUser = userService.getUser(principal);
+
+        if(!pollSession.getHost().equals(pollUser)) {
+            return "";
+        }
+
+        JSONObject jsonObject = new JSONObject();
+        Poll poll = pollRepository.findOne(pollSession.getPoll().getId());
+
+        List<PollQuestion> pollQuestionList = poll.getQuestions();
+
+        JSONArray jsonArray = new JSONArray();
+
+        List<Object[]> userAnswerPercentages = userAnswerRepository.getSelectedPercentage(pollSessionId);
+        List<Object[]> userTotalPercentages = userAnswerRepository.getTotalPercentage(pollSessionId);
+
+        Map<Integer, Integer> userSelectedPercentageMap = new HashMap<>();
+        Map<Integer, Integer> userPercentageMap = new HashMap<>();
+
+        for(int i = 0; i < userSelectedPercentageMap.size(); i++) {
+            Integer answerId = (Integer)userAnswerPercentages.get(i)[0];
+            BigInteger count = (BigInteger)userAnswerPercentages.get(i)[1];
+            userSelectedPercentageMap.put(answerId, count.intValue());
+        }
+
+        for(int i = 0; i < userPercentageMap.size(); i++) {
+            Integer answerId = (Integer)userTotalPercentages.get(i)[0];
+            BigInteger count = (BigInteger)userTotalPercentages.get(i)[1];
+            userPercentageMap.put(answerId, count.intValue());
+        }
+
+        for(int i = 0; i < pollQuestionList.size(); i++) {
+            PollQuestion pollQuestion = pollQuestionList.get(i);
+
+            List<PollQuestionAnswer> pollQuestionAnswers = pollQuestion.getQuestionAnswers();
+
+            for(int j = 0; j < pollQuestionAnswers.size(); j++) {
+                PollQuestionAnswer pollQuestionAnswer = pollQuestionAnswers.get(j);
+
+                Double percentage = (double)userSelectedPercentageMap.getOrDefault(pollQuestionAnswer.getId(), 0) /
+                        (double)userPercentageMap.get(pollQuestionAnswer.getId());
+
+                System.out.println(percentage);
+            }
+        }
+
+        jsonObject.put("statistics", jsonArray);
+
+        return jsonObject.toString();
+    }
 
     @GetMapping("/poll/{sessionCode}")
     public @ResponseBody
@@ -62,18 +125,10 @@ public class SessionApiController {
 
                     int answerId = answer.getInt("id");
 
-                    PollQuestionAnswer pollQuestionAnswer = pollQuestionAnswerRepository.findOne(answerId);
-
                     UserAnswer userAnswer = userAnswerRepository.getBySessionCode(answerId, springSession);
 
-                    Boolean isCorrect = pollQuestionAnswer.getCorrect();
-
-                    if(isCorrect == null) {
-                        isCorrect = false;
-                    }
-
                     if(userAnswer != null) {
-                        answer.put("checked", userAnswer.isCorrect() == isCorrect);
+                        answer.put("checked", userAnswer.isChecked());
                     }
                 }
             }
@@ -93,8 +148,6 @@ public class SessionApiController {
         Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 
         String springSession = RequestContextHolder.currentRequestAttributes().getSessionId();
-
-        System.out.println();
 
         PollUser pollUser = userService.getUser(principal);
 
@@ -121,13 +174,7 @@ public class SessionApiController {
                     userAnswer = new UserAnswer();
                 }
 
-                Boolean isCorrect = pollQuestionAnswer.getCorrect();
-
-                if(isCorrect == null) {
-                    isCorrect = false;
-                }
-
-                userAnswer.setCorrect(isCorrect.equals(answer.getBoolean("checked")));
+                userAnswer.setChecked(answer.getBoolean("checked"));
                 userAnswer.setSession(pollSession);
                 userAnswer.setTime(currentTime);
                 userAnswer.setAnswer(pollQuestionAnswer);
