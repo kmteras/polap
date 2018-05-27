@@ -46,6 +46,10 @@ public class SessionApiController {
     String poll(@PathVariable(value="sessionCode") String sessionCode, Principal principal) {
         PollSession pollSession = pollService.findSession(sessionCode);
 
+        if(pollSession == null) {
+            return new JSONObject().toString();
+        }
+
         int pollSessionId = pollSession.getId();
 
         PollUser pollUser = userService.getUser(principal);
